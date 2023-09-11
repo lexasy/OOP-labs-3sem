@@ -1,3 +1,17 @@
-cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
-project(main)
-add_executable(main src/main.cpp)
+cmake_minimum_required(VERSION 3.10)
+project(lab)
+
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_executable(lab src/main.cpp src/task.cpp)
+
+
+enable_testing()
+add_executable(tests src/tests.cpp src/task.cpp)
+target_link_libraries(tests ${GTEST_LIBRARIES})
+
+add_test(NAME BASIC COMMAND tests)
