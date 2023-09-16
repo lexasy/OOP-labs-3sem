@@ -26,6 +26,21 @@ TEST(test_05, basic_test_set)
     ASSERT_TRUE(task06("We don't remember they, because they are stupid guys!") == "W dn't rmmbr th, bcs th r stpd gs!");
 }
 
+TEST(test_06, basic_test_set)
+{
+    ASSERT_TRUE(task06("BRRRRrr!!!") == "BRRRRrr!!!");
+}
+
+TEST(test_07, basic_test_set)
+{
+    ASSERT_TRUE(task06("AAAAAaa!!!") == "!!!");
+}
+
+TEST(test_08, basic_test_set)
+{
+    ASSERT_TRUE(task06("") == "");
+}
+
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
