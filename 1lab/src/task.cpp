@@ -12,7 +12,7 @@ string task06(string s) {
     int cnt = s.length();
     for (int i = 0; i < cnt; i++)
         if (is_vowel(s[i])) {
-            s.erase(i, 1); --i;
+            s.erase(i, 1); --i; // Декриментируем индекс, так как после стирания литеры, индекс следующей литеры будет уменьшен, и так мы ее не пропустим
         }
     return s;
 }
