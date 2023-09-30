@@ -1,22 +1,22 @@
 #include "twelwe.h"
 
-std::vector<u_char> Twelwe::saveNumber(std::string strNum, std::vector<u_char> numBuff) {
-    for (int i = 0; i < s.length(); i++) {
-        if (s[i] < '0' || s[i] > '9' && (s[i] != 'A' && s[i] != 'B')) { // 12-ричная система
+std::vector<u_char> Twelwe::saveNumber(std::string numStr, std::vector<u_char> numBuff) {
+    for (int i = 0; i < numStr.length(); i++) {
+        if (numStr[i] < '0' || numStr[i] > '9' && (numStr[i] != 'A' && numStr[i] != 'B')) { // 12-ричная система
             throw std::string{"Incorrect number!"};
             break;
         }
-        numBuff.push_back(s[i]);
+        numBuff.push_back(numStr[i]);
     }
     std::vector<u_char> numBuffr;
     for (int i = numBuff.size() - 1; i >= 0; --i) {
         numBuffr.push_back(numBuff[i]);
     }
-    numBuff = numBuffr;
-    return numBuff;
+    return numBuffr;
 }
 
 void Twelwe::read_number() {
+    std::string s;
     std::cout << "Your number: "; getline(std::cin, s);
     try {
         buff = saveNumber(s, buff);
@@ -44,5 +44,19 @@ u_int64_t Twelwe::from12to10(std::vector<u_char> numBuff) {
         result += pow(12, i) * cur;
     }
     return result;
+}
+
+std::vector<u_char> Twelwe::from10to12(u_int64_t number) {
+    std::vector<u_char> numBuff; int cur;
+    while (number > 0) {
+        cur = number % 12;
+        if (cur < 10) {
+            numBuff.push_back(cur + '0');
+        } else {
+            numBuff.push_back(cur - 10 + 'A');
+        }
+        number /= 12;
+    }
+    return numBuff;
 }
 
