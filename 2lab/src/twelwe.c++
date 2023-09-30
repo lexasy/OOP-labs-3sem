@@ -14,9 +14,7 @@ std::vector<u_char> Twelwe::saveNumber(std::string numStr, std::vector<u_char> n
     return numBuffr;
 }
 
-void Twelwe::read_number() {
-    std::string s;
-    std::cout << "Your number: "; getline(std::cin, s);
+void Twelwe::read_number(std::string s) {
     try {
         buff = saveNumber(s, buff);
     } catch (const std::string& error_message) {
@@ -30,6 +28,14 @@ void Twelwe::print_number() {
         std::cout << buff[buff.size() - 1 - i];
     }
     std::cout << "\n";
+}
+
+std::string Twelwe::return_number() {
+    std::string result;
+    for (int i = 0; i < buff.size(); i++) {
+        result += buff[buff.size() - 1 - i];
+    }
+    return result;
 }
 
 u_int64_t Twelwe::from12to10() {  // not destruct foo
@@ -47,6 +53,9 @@ u_int64_t Twelwe::from12to10() {  // not destruct foo
 
 void Twelwe::from10to12(u_int64_t number) {  // destruct foo
     u_int64_t cur; buff.clear();
+    if (number == 0) {
+        buff.push_back('0');
+    }
     while (number > 0) {
         cur = number % 12;
         if (cur < 10) {
@@ -65,7 +74,7 @@ Twelwe addition(Twelwe num1, Twelwe num2) {
 }
 
 Twelwe subtraction(Twelwe num1, Twelwe num2) {
-    if (num1.from12to10() > num2.from12to10()) {
+    if (num1.from12to10() < num2.from12to10()) {
         throw std::string{"Can't use negative numbers!"};
     }
     Twelwe result;
@@ -80,12 +89,61 @@ Twelwe multiplication(Twelwe num1, Twelwe num2) {
 }
 
 Twelwe division(Twelwe num1, Twelwe num2) {
+    if (num2.from12to10() == 0) {
+        throw std::string{"Division by zero!"};
+    }
     Twelwe result;
     result.from10to12(num1.from12to10() / num2.from12to10());
     return result;
 }
 
-void mpower(Twelwe num, int powr) {
-    num.from10to12(pow(num.from12to10(), powr));
+Twelwe mpower(Twelwe num, int powr) {
+    Twelwe result;
+    u_int64_t res10 = pow(num.from12to10(), powr);
+    result.from10to12(res10);
+    return result;
 }
 
+// Suits for Google tests
+
+std::string straddition(std::string num1, std::string num2) {
+    Twelwe result; Twelwe tnum1; Twelwe tnum2;
+    tnum1.read_number(num1); tnum2.read_number(num2);
+    result.from10to12(tnum1.from12to10() + tnum2.from12to10());
+    return result.return_number();
+}
+
+std::string strsubtraction(std::string num1, std::string num2) {
+    Twelwe result; Twelwe tnum1; Twelwe tnum2;
+    tnum1.read_number(num1); tnum2.read_number(num2);
+    if (tnum1.from12to10() < tnum2.from12to10()) {
+        return std::string{"Can't use negative numbers!"};
+    }
+    result.from10to12(tnum1.from12to10() - tnum2.from12to10());
+    return result.return_number();
+}
+
+std::string strmultiplication(std::string num1, std::string num2) {
+    Twelwe result; Twelwe tnum1; Twelwe tnum2;
+    tnum1.read_number(num1); tnum2.read_number(num2);
+    result.from10to12(tnum1.from12to10() * tnum2.from12to10());
+    return result.return_number();
+}
+
+std::string strdivision(std::string num1, std::string num2) {
+    Twelwe result; Twelwe tnum1; Twelwe tnum2;
+    tnum1.read_number(num1); tnum2.read_number(num2);
+    if (tnum2.from12to10() == 0) {
+        return std::string{"Division by zero!"};
+    }
+    result.from10to12(tnum1.from12to10() / tnum2.from12to10());
+    return result.return_number();
+}
+
+std::string strmpower(std::string num1, int powr) {
+    Twelwe result; Twelwe tnum1;
+    tnum1.read_number(num1);
+    u_int64_t res10 = pow(tnum1.from12to10(), powr);
+    result.from10to12(res10);
+    return result.return_number();
+}
