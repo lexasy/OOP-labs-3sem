@@ -14,8 +14,8 @@ class Twelwe {
         u_int64_t from12to10();
         void from10to12(u_int64_t number);
     private:
-        std::vector<u_char> buff;
-        std::vector<u_char> saveNumber(std::string numStr, std::vector<u_char> numBuff);
+        uchar_vector *buff;
+        uchar_vector *saveNumber(std::string numStr, uchar_vector *numBuff);
 };
 
 Twelwe addition(Twelwe num1, Twelwe num2);
@@ -26,8 +26,8 @@ Twelwe mpower(Twelwe num, int powr);
 
 // Suits for Google tests
 
-std::string straddition(std::string num1, std::string num2);
-std::string strsubtraction(std::string num1, std::string num2);
-std::string strmultiplication(std::string num1, std::string num2);
-std::string strdivision(std::string num1, std::string num2);
-std::string strmpower(std::string num, int powr);
+// std::string straddition(std::string num1, std::string num2);
+// std::string strsubtraction(std::string num1, std::string num2);
+// std::string strmultiplication(std::string num1, std::string num2);
+// std::string strdivision(std::string num1, std::string num2);
+// std::string strmpower(std::string num, int powr);

@@ -1,16 +1,17 @@
 #include "twelwe.h"
 
-std::vector<u_char> Twelwe::saveNumber(std::string numStr, std::vector<u_char> numBuff) {
+uchar_vector *Twelwe::saveNumber(std::string numStr, uchar_vector *numBuff) {
     for (int i = 0; i < numStr.length(); i++) {
         if (numStr[i] < '0' || numStr[i] > '9' && (numStr[i] != 'A' && numStr[i] != 'B')) { // 12-ричная система
             throw std::string{"Incorrect number!"};
         }
-        numBuff.push_back(numStr[i]);
+        push_back(numBuff, numStr[i]);
     }
-    std::vector<u_char> numBuffr;
-    for (int i = numBuff.size() - 1; i >= 0; --i) {
-        numBuffr.push_back(numBuff[i]);
+    uchar_vector *numBuffr = create_vector();
+    for (int i = get_size(numBuff) - 1; i >= 0; --i) {
+        push_back(numBuffr, get_elem(numBuff, i));
     }
+    destroy(numBuff);
     return numBuffr;
 }
 
@@ -24,27 +25,27 @@ void Twelwe::read_number(std::string s) {
 }
 
 void Twelwe::print_number() {
-    for (int i = 0; i < buff.size(); i++) {
-        std::cout << buff[buff.size() - 1 - i];
+    for (int i = 0; i < get_size(buff); i++) {
+        std::cout << get_elem(buff, get_size(buff) - 1 - i);
     }
     std::cout << "\n";
 }
 
-std::string Twelwe::return_number() {
-    std::string result;
-    for (int i = 0; i < buff.size(); i++) {
-        result += buff[buff.size() - 1 - i];
-    }
-    return result;
-}
+// std::string Twelwe::return_number() {
+//     std::string result;
+//     for (int i = 0; i < buff.size(); i++) {
+//         result += buff[buff.size() - 1 - i];
+//     }
+//     return result;
+// }
 
 u_int64_t Twelwe::from12to10() {  // not destruct foo
     u_int64_t result = 0; u_int64_t cur;
-    for (int i = 0; i < buff.size(); i++) {
-        if (buff[i] >= '0' && buff[i] <= '9') {
-            cur = buff[i] - '0';
+    for (int i = 0; i < get_size(buff); i++) {
+        if (get_elem(buff, i) >= '0' && get_elem(buff, i) <= '9') {
+            cur = get_elem(buff, i) - '0';
         } else {
-            cur = buff[i] - 'A' + 10;
+            cur = get_elem(buff, i) - 'A' + 10;
         }
         result += pow(12, i) * cur;
     }
@@ -52,16 +53,17 @@ u_int64_t Twelwe::from12to10() {  // not destruct foo
 }
 
 void Twelwe::from10to12(u_int64_t number) {  // destruct foo
-    u_int64_t cur; buff.clear();
+    u_int64_t cur; destroy(buff);
+    buff = create_vector();
     if (number == 0) {
-        buff.push_back('0');
+        push_back(buff, '0');
     }
     while (number > 0) {
         cur = number % 12;
         if (cur < 10) {
-            buff.push_back(cur + '0');
+            push_back(buff, cur + '0');
         } else {
-            buff.push_back(cur - 10 + 'A');
+            push_back(buff, cur - 10 + 'A');
         }
         number /= 12;
     }
@@ -106,44 +108,44 @@ Twelwe mpower(Twelwe num, int powr) {
 
 // Suits for Google tests
 
-std::string straddition(std::string num1, std::string num2) {
-    Twelwe result; Twelwe tnum1; Twelwe tnum2;
-    tnum1.read_number(num1); tnum2.read_number(num2);
-    result.from10to12(tnum1.from12to10() + tnum2.from12to10());
-    return result.return_number();
-}
+// std::string straddition(std::string num1, std::string num2) {
+//     Twelwe result; Twelwe tnum1; Twelwe tnum2;
+//     tnum1.read_number(num1); tnum2.read_number(num2);
+//     result.from10to12(tnum1.from12to10() + tnum2.from12to10());
+//     return result.return_number();
+// }
 
-std::string strsubtraction(std::string num1, std::string num2) {
-    Twelwe result; Twelwe tnum1; Twelwe tnum2;
-    tnum1.read_number(num1); tnum2.read_number(num2);
-    if (tnum1.from12to10() < tnum2.from12to10()) {
-        return std::string{"Can't use negative numbers!"};
-    }
-    result.from10to12(tnum1.from12to10() - tnum2.from12to10());
-    return result.return_number();
-}
+// std::string strsubtraction(std::string num1, std::string num2) {
+//     Twelwe result; Twelwe tnum1; Twelwe tnum2;
+//     tnum1.read_number(num1); tnum2.read_number(num2);
+//     if (tnum1.from12to10() < tnum2.from12to10()) {
+//         return std::string{"Can't use negative numbers!"};
+//     }
+//     result.from10to12(tnum1.from12to10() - tnum2.from12to10());
+//     return result.return_number();
+// }
 
-std::string strmultiplication(std::string num1, std::string num2) {
-    Twelwe result; Twelwe tnum1; Twelwe tnum2;
-    tnum1.read_number(num1); tnum2.read_number(num2);
-    result.from10to12(tnum1.from12to10() * tnum2.from12to10());
-    return result.return_number();
-}
+// std::string strmultiplication(std::string num1, std::string num2) {
+//     Twelwe result; Twelwe tnum1; Twelwe tnum2;
+//     tnum1.read_number(num1); tnum2.read_number(num2);
+//     result.from10to12(tnum1.from12to10() * tnum2.from12to10());
+//     return result.return_number();
+// }
 
-std::string strdivision(std::string num1, std::string num2) {
-    Twelwe result; Twelwe tnum1; Twelwe tnum2;
-    tnum1.read_number(num1); tnum2.read_number(num2);
-    if (tnum2.from12to10() == 0) {
-        return std::string{"Division by zero!"};
-    }
-    result.from10to12(tnum1.from12to10() / tnum2.from12to10());
-    return result.return_number();
-}
+// std::string strdivision(std::string num1, std::string num2) {
+//     Twelwe result; Twelwe tnum1; Twelwe tnum2;
+//     tnum1.read_number(num1); tnum2.read_number(num2);
+//     if (tnum2.from12to10() == 0) {
+//         return std::string{"Division by zero!"};
+//     }
+//     result.from10to12(tnum1.from12to10() / tnum2.from12to10());
+//     return result.return_number();
+// }
 
-std::string strmpower(std::string num1, int powr) {
-    Twelwe result; Twelwe tnum1;
-    tnum1.read_number(num1);
-    u_int64_t res10 = pow(tnum1.from12to10(), powr);
-    result.from10to12(res10);
-    return result.return_number();
-}
+// std::string strmpower(std::string num1, int powr) {
+//     Twelwe result; Twelwe tnum1;
+//     tnum1.read_number(num1);
+//     u_int64_t res10 = pow(tnum1.from12to10(), powr);
+//     result.from10to12(res10);
+//     return result.return_number();
+// }
