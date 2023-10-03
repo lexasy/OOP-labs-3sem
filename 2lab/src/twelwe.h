@@ -4,6 +4,7 @@
 #include <string>
 #include <math.h>
 #include <vector>
+#include "dyn_array.h"
 
 class Twelwe {
     public:
