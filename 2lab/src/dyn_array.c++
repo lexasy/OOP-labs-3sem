@@ -42,7 +42,7 @@ void set_elem(uchar_vector *v, int idx, u_char val) {
     v->buf[v->head + idx] = val;
 }
 
-bool push_back(uchar_vector *v, int val) {
+bool push_back(uchar_vector *v, u_char val) {
     v->tail = v->head + v->size;
     if ((v->tail == v->cap) && (!increase_buffer(v))) {
         return false;
@@ -61,13 +61,14 @@ u_char pop_back(uchar_vector *v) {
 }
 
 void destroy(uchar_vector *v) {
-    delete(v->buf);
-    v->buf = nullptr;
+    if (v->size > 0) {
+        v->size = 0;
+        v->head = 0;
+        v->tail = 0;
+        delete[] v->buf;
+    }
     v->cap = 0;
-    v->head = 0;
-    v->tail = 0;
-    v->size = 0;
-    delete(v);
+    v->buf = nullptr;
 }
 
 void print_vector(uchar_vector *v) {

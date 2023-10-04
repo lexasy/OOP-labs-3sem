@@ -1,43 +1,48 @@
 #include "twelwe.h"
 
-uchar_vector *Twelwe::saveNumber(std::string numStr, uchar_vector *numBuff) {
-    for (int i = 0; i < numStr.length(); i++) {
-        if (numStr[i] < '0' || numStr[i] > '9' && (numStr[i] != 'A' && numStr[i] != 'B')) { // 12-ричная система
-            throw std::string{"Incorrect number!"};
-        }
-        push_back(numBuff, numStr[i]);
-    }
-    uchar_vector *numBuffr = create_vector();
-    for (int i = get_size(numBuff) - 1; i >= 0; --i) {
-        push_back(numBuffr, get_elem(numBuff, i));
-    }
-    destroy(numBuff);
-    return numBuffr;
+Twelwe::Twelwe() {
+    buff = create_vector();
 }
 
-void Twelwe::read_number(std::string s) {
-    try {
-        buff = saveNumber(s, buff);
-    } catch (const std::string& error_message) {
-        std::cout << error_message << std::endl;
-        exit(-1);
+Twelwe::Twelwe(const Twelwe& other) {
+    buff = create_vector();
+    int sz = get_size(other.buff);
+    for (int i = sz; i < sz; i++) {
+        push_back(buff, get_elem(other.buff, i));
     }
 }
 
-void Twelwe::print_number() {
+Twelwe::Twelwe(const std::string& numStr) {
+    int sz = numStr.size();
+    uchar_vector *tmp = create_vector();
+    buff = create_vector();
+    for (int i = 0; i < sz; i++) {
+        push_back(tmp, numStr[i]);
+    }
+    for (int i = 0; i < sz; i++) {
+        push_back(buff, pop_back(tmp));
+    }
+    destroy(tmp);
+}
+
+Twelwe::~Twelwe() noexcept {
+    if (buff->size > 0) {
+        buff->size = 0;
+        buff->head = 0;
+        buff->tail = 0;
+        delete[] buff->buf;
+    }
+    buff->cap = 0;
+    buff->buf = nullptr;
+}
+
+std::ostream& Twelwe::print_number(std::ostream& os) {
     for (int i = 0; i < get_size(buff); i++) {
-        std::cout << get_elem(buff, get_size(buff) - 1 - i);
+        os << get_elem(buff, get_size(buff) - 1 - i);
     }
-    std::cout << "\n";
+    os << "\n";
+    return os;
 }
-
-// std::string Twelwe::return_number() {
-//     std::string result;
-//     for (int i = 0; i < buff.size(); i++) {
-//         result += buff[buff.size() - 1 - i];
-//     }
-//     return result;
-// }
 
 u_int64_t Twelwe::from12to10() {  // not destruct foo
     u_int64_t result = 0; u_int64_t cur;
@@ -53,8 +58,11 @@ u_int64_t Twelwe::from12to10() {  // not destruct foo
 }
 
 void Twelwe::from10to12(u_int64_t number) {  // destruct foo
-    u_int64_t cur; destroy(buff);
-    buff = create_vector();
+    u_int64_t cur;
+    if (get_size(buff)) {
+        destroy(buff);
+        buff = create_vector();
+    }
     if (number == 0) {
         push_back(buff, '0');
     }
@@ -69,40 +77,33 @@ void Twelwe::from10to12(u_int64_t number) {  // destruct foo
     }
 }
 
-Twelwe addition(Twelwe num1, Twelwe num2) {
+Twelwe addition(Twelwe& num1, Twelwe& num2) {
     Twelwe result;
     result.from10to12(num1.from12to10() + num2.from12to10());
     return result;
 }
 
-Twelwe subtraction(Twelwe num1, Twelwe num2) {
+Twelwe subtraction(Twelwe& num1, Twelwe& num2) {
+    Twelwe result;
     if (num1.from12to10() < num2.from12to10()) {
         throw std::string{"Can't use negative numbers!"};
     }
-    Twelwe result;
     result.from10to12(num1.from12to10() - num2.from12to10());
     return result;
 }
 
-Twelwe multiplication(Twelwe num1, Twelwe num2) {
+Twelwe multiplication(Twelwe& num1, Twelwe& num2) {
     Twelwe result;
     result.from10to12(num1.from12to10() * num2.from12to10());
     return result;
 }
 
-Twelwe division(Twelwe num1, Twelwe num2) {
+Twelwe division(Twelwe& num1, Twelwe& num2) {
     if (num2.from12to10() == 0) {
         throw std::string{"Division by zero!"};
     }
     Twelwe result;
     result.from10to12(num1.from12to10() / num2.from12to10());
-    return result;
-}
-
-Twelwe mpower(Twelwe num, int powr) {
-    Twelwe result;
-    u_int64_t res10 = pow(num.from12to10(), powr);
-    result.from10to12(res10);
     return result;
 }
 
