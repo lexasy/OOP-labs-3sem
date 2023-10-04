@@ -3,8 +3,7 @@
 void check_num(std::string& num) {
     for (int i = 0; i < num.size(); i++) {
         if ((num[i] < '0' || num[i] > '9') && (num[i] != 'A' && num[i] != 'B')) {
-            std::cout << "Incorrect number!\n";
-            exit(-1);
+            throw std::string{"Incorrect number!"};
         }
     }
 }
@@ -15,7 +14,12 @@ void parse(std::string& input) {
         strNum1 += input[idx];
         idx++;
     }
-    check_num(strNum1);
+    try {
+        check_num(strNum1);
+    } catch(const std::string& error_message) {
+        std::cout << error_message << "\n";
+        exit(-1);
+    }
     while (input[idx] == 32) { // 32 == space
         idx++;
     }
@@ -30,7 +34,12 @@ void parse(std::string& input) {
         strNum2 += input[idx];
         idx++;
     }
-    check_num(strNum2);
+    try {
+        check_num(strNum2);
+    } catch(const std::string& error_message) {
+        std::cout << error_message << "\n";
+        exit(-1);
+    }
     if (strNum1.length() == 0 || strNum2.length() == 0) {
         std::cout << "Incorrect input!\n";
         exit(-1);
