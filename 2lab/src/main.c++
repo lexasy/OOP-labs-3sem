@@ -1,13 +1,5 @@
 #include "twelwe.h"
 
-void check_num(std::string& num) {
-    for (int i = 0; i < num.size(); i++) {
-        if ((num[i] < '0' || num[i] > '9') && (num[i] != 'A' && num[i] != 'B')) {
-            throw std::string{"Incorrect number!"};
-        }
-    }
-}
-
 void parse(std::string& input) {
     int idx = 0; std::string strNum1; std::string strNum2; char op; int op_flag = 0;
     while (input[idx] >= '0' && input[idx] <= '9' || input[idx] >= 'A' && input[idx] <= 'Z' || input[idx] >= 'a' && input[idx] <= 'z')  {

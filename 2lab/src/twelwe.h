@@ -13,10 +13,13 @@ class Twelwe {
         std::ostream& print_number(std::ostream& os);
         u_int64_t from12to10();
         void from10to12(u_int64_t number);
+        bool is_equals(const Twelwe& other);
         virtual ~Twelwe() noexcept; // Destructor
     private:
         uchar_vector *buff;
 };
+
+void check_num(std::string& num);
 
 Twelwe addition(Twelwe& num1, Twelwe& num2);
 Twelwe subtraction(Twelwe& num1, Twelwe& num2);

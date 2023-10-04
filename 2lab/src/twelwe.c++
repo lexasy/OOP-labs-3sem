@@ -1,5 +1,13 @@
 #include "twelwe.h"
 
+void check_num(const std::string& num) {
+    for (int i = 0; i < num.size(); i++) {
+        if ((num[i] < '0' || num[i] > '9') && (num[i] != 'A' && num[i] != 'B')) {
+            throw std::string{"Incorrect number!"};
+        }
+    }
+}
+
 Twelwe::Twelwe() {
     buff = create_vector();
 }
@@ -13,6 +21,12 @@ Twelwe::Twelwe(const Twelwe& other) {
 }
 
 Twelwe::Twelwe(const std::string& numStr) {
+    try {
+        check_num(numStr);
+    } catch(const std::string& error_message) {
+        std::cout << error_message << "\n";
+        exit(-1);
+    }
     int sz = numStr.size();
     uchar_vector *tmp = create_vector();
     buff = create_vector();
@@ -68,6 +82,17 @@ void Twelwe::from10to12(u_int64_t number) {  // destruct foo
         }
         number /= 12;
     }
+}
+
+bool Twelwe::is_equals(const Twelwe& other) {
+    if (buff->size == other.buff->size) {
+        for (int i = 0; i < buff->size; i++) {
+            if (get_elem(buff, i) != get_elem(other.buff, i)) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 Twelwe addition(Twelwe& num1, Twelwe& num2) {
