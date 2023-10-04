@@ -32,7 +32,7 @@ Twelwe::Twelwe(const Twelwe& other) { // Copy constructor
     for(size_t i{0}; i<_size; ++i) _array[i] = other._array[i];
 }
 
-Twelwe::Twelwe(Twelwe&& other) { // Move constructor
+Twelwe::Twelwe(Twelwe&& other) noexcept { // Move constructor
     _size = other._size;
     _array = other._array;
     other._size = 0;

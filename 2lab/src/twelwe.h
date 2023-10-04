@@ -10,7 +10,7 @@ class Twelwe {
     public:
         // Constructors
         Twelwe();
-        Twelwe(const size_t & n, u_char t = 0);
+        Twelwe(const size_t& n, u_char t = 0);
         Twelwe(const std::initializer_list<u_char>& t);
         Twelwe(const std::string& t);
         Twelwe(const Twelwe& other);
