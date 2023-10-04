@@ -10,8 +10,8 @@ void check_num(std::string& num) {
 }
 
 void parse(std::string& input) {
-    int idx = 0; std::string strNum1; std::string strNum2; char op;
-    while (input[idx] >= '0' && input[idx] <= '9' || input[idx] >= 'A' && input[idx] <= 'Z') {
+    int idx = 0; std::string strNum1; std::string strNum2; char op; int op_flag = 0;
+    while (input[idx] >= '0' && input[idx] <= '9' || input[idx] >= 'A' && input[idx] <= 'Z' || input[idx] >= 'a' && input[idx] <= 'z')  {
         strNum1 += input[idx];
         idx++;
     }
@@ -20,19 +20,26 @@ void parse(std::string& input) {
         idx++;
     }
     op = input[idx]; idx++;
+    if (input[idx] == '>') {
+        op_flag = 1; idx++;
+    }
     while (input[idx] == 32) { // 32 == space
         idx++;
     }
-    while (input[idx] >= '0' && input[idx] <= '9' || input[idx] >= 'A' && input[idx] <= 'Z') {
+    while (idx < input.length()) {
         strNum2 += input[idx];
         idx++;
     }
     check_num(strNum2);
+    if (strNum1.length() == 0 || strNum2.length() == 0) {
+        std::cout << "Incorrect input!\n";
+        exit(-1);
+    }
     if (op == '+') {
         Twelwe num1 = Twelwe(strNum1); Twelwe num2 = Twelwe(strNum2);
         Twelwe result = Twelwe(addition(num1, num2));
         result.print_number(std::cout);
-    } else if (op == '-') {
+    } else if (op == '-' && op_flag == 0) {
         Twelwe num1 = Twelwe(strNum1); Twelwe num2 = Twelwe(strNum2);
         try {
             Twelwe result = Twelwe(subtraction(num1, num2));
@@ -54,7 +61,7 @@ void parse(std::string& input) {
             std::cout << error_message << "\n";
             exit(-1);
         }
-    } else if (op == '>') {
+    } else if (op == '-' && op_flag == 1) {
         if (std::stoi(strNum2) == 10) {
             Twelwe num1 = Twelwe(strNum1);
             int result = num1.from12to10();
@@ -75,6 +82,27 @@ void parse(std::string& input) {
         } else {
             std::cout << "The system is invalid!\n";
             exit(-1);
+        }
+    } else if (op == '<') {
+        Twelwe num1 = Twelwe(strNum1); Twelwe num2 = Twelwe(strNum2);
+        if (num1.from12to10() < num2.from12to10()) {
+            std::cout << "True\n";
+        } else {
+            std::cout << "False\n";
+        }
+    } else if (op == '>') {
+        Twelwe num1 = Twelwe(strNum1); Twelwe num2 = Twelwe(strNum2);
+        if (num1.from12to10() > num2.from12to10()) {
+            std::cout << "True\n";
+        } else {
+            std::cout << "False\n";
+        }
+    } else if (op == '=') {
+        Twelwe num1 = Twelwe(strNum1); Twelwe num2 = Twelwe(strNum2);
+        if (num1.from12to10() == num2.from12to10()) {
+            std::cout << "True\n";
+        } else {
+            std::cout << "False\n";
         }
     } else {
         std::cout << "Incorrect operator!\n";

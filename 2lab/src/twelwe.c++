@@ -26,14 +26,7 @@ Twelwe::Twelwe(const std::string& numStr) {
 }
 
 Twelwe::~Twelwe() noexcept {
-    if (buff->size > 0) {
-        buff->size = 0;
-        buff->head = 0;
-        buff->tail = 0;
-        delete[] buff->buf;
-    }
-    buff->cap = 0;
-    buff->buf = nullptr;
+    destroy(buff);
 }
 
 std::ostream& Twelwe::print_number(std::ostream& os) {
