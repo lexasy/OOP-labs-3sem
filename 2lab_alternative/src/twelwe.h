@@ -25,12 +25,3 @@ Twelwe addition(Twelwe& num1, Twelwe& num2);
 Twelwe subtraction(Twelwe& num1, Twelwe& num2);
 Twelwe multiplication(Twelwe& num1, Twelwe& num2);
 Twelwe division(Twelwe& num1, Twelwe& num2);
-
-
-// Suits for Google tests
-
-// std::string straddition(std::string num1, std::string num2);
-// std::string strsubtraction(std::string num1, std::string num2);
-// std::string strmultiplication(std::string num1, std::string num2);
-// std::string strdivision(std::string num1, std::string num2);
-// std::string strmpower(std::string num, int powr);
