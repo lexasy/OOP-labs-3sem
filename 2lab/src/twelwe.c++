@@ -62,14 +62,15 @@ Twelwe Twelwe::rmvZero() const {
 }
 
 Twelwe Twelwe::add(const Twelwe& other) { // this + other
+    Twelwe old(this->rmvZero()); Twelwe newn(other.rmvZero());
     size_t res_size = 0;
     if (_size + other._size) {
-        res_size = std::max(_size, other._size) + 1;
+        res_size = std::max(old._size, newn._size) + 1;
     }
     Twelwe res(res_size, '0');
     int remainder = 0; u_char btw;
     for (int i = 0; i < res_size; i++) {
-        btw = from_i_to_c((i < _size ? from_c_to_i(_array[i]) : 0) + (i < other._size ? from_c_to_i(other._array[i]) : 0) + remainder);
+        btw = from_i_to_c((i < old._size ? from_c_to_i(old._array[i]) : 0) + (i < newn._size ? from_c_to_i(newn._array[i]) : 0) + remainder);
         res._array[i] = from_i_to_c(from_c_to_i(btw) % SYSTEM);
         remainder = from_c_to_i(btw) / SYSTEM;
     }
@@ -80,25 +81,27 @@ Twelwe Twelwe::substraction(const Twelwe& other) { // this - other
     if (this->less(other)) {
         throw std::string{"Can't use negative numbers!"};
     }
-    if (_size && other._size) {
+    Twelwe old(this->rmvZero()); Twelwe newn(other.rmvZero());
+    if (old._size && newn._size) {
         int flag = 0; int btw;
-        for (int i = 0; i < _size; i++) {
-            btw = from_c_to_i(_array[i]) - (flag + from_c_to_i(i < other._size ? other._array[i] : '0'));
+        for (int i = 0; i < old._size; i++) {
+            btw = from_c_to_i(old._array[i]) - (flag + from_c_to_i(i < newn._size ? newn._array[i] : '0'));
             flag = btw < 0 ? 1 : 0;
             if (flag) {
-                _array[i] = from_i_to_c(btw + SYSTEM);
+                old._array[i] = from_i_to_c(btw + SYSTEM);
             } else {
-                _array[i] = from_i_to_c(btw);
+                old._array[i] = from_i_to_c(btw);
             }
         }
     }
-    return this->rmvZero();
+    return old.rmvZero();
 }
 
 bool Twelwe::equals(const Twelwe& other) const { // this == other?
-    if (_size == other._size) {
-        for (int i = 0; i < _size; i++) {
-            if (_array[i] == other._array[i]) {
+    Twelwe old(this->rmvZero()); Twelwe newn(other.rmvZero());
+    if (old._size == newn._size) {
+        for (int i = 0; i < old._size; i++) {
+            if (old._array[i] == newn._array[i]) {
                 continue;
             } else {
                 return false;
@@ -122,9 +125,8 @@ bool Twelwe::more(const Twelwe& other) const { // this > other?
             }
         }
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 bool Twelwe::less(const Twelwe& other) const { // this < other?
@@ -138,12 +140,20 @@ bool Twelwe::less(const Twelwe& other) const { // this < other?
 std::ostream& Twelwe::print(std::ostream& os) const { // this -> std::cout
     Twelwe old(this->rmvZero());
     if (old._size) {
-        for (int i = _size - 1; i >= 0; i--) {
+        for (int i = old._size - 1; i >= 0; i--) {
             os << old._array[i];
         }
     }
     return os;
-} 
+}
+
+u_char *Twelwe::GetArrayPointer() const { // Array pointer getter
+    return this->_array;
+}
+
+size_t Twelwe::GetArraySize() const { // Array size getter
+    return this->_size;
+}
 
 Twelwe::~Twelwe() noexcept { // Destructor
     if (_size)
