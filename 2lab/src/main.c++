@@ -2,7 +2,7 @@
 
 int main() {
     // Contructors testing
-    std::cout << "Constructors testing...\n\n";
+    std::cout << "Constructors testing...\n";
     Twelwe num1(5, '7'); std::cout << "\n";
     std::cout << "[1]Fill-array constructor: ";
     num1.print(std::cout); std::cout << "\n";
