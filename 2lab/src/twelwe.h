@@ -16,7 +16,7 @@ class Twelwe {
         Twelwe(const Twelwe& other);
         Twelwe(Twelwe&& other) noexcept;
 
-        // Methods
+        // Class methods
         Twelwe add(const Twelwe& other);
         Twelwe substraction(const Twelwe& other);
         bool equals(const Twelwe& other) const;

@@ -78,14 +78,14 @@ Twelwe Twelwe::add(const Twelwe& other) { // this + other
 }
 
 Twelwe Twelwe::substraction(const Twelwe& other) { // this - other
-    if (this->less(other)) {
+    Twelwe old(this->rmvZero()); Twelwe newn(other.rmvZero());
+    if (old.less(newn)) {
         throw std::string{"Can't use negative numbers!"};
     }
-    Twelwe old(this->rmvZero()); Twelwe newn(other.rmvZero());
     if (old._size && newn._size) {
         int flag = 0; int btw;
         for (int i = 0; i < old._size; i++) {
-            btw = from_c_to_i(old._array[i]) - (flag + from_c_to_i(i < newn._size ? newn._array[i] : '0'));
+            btw = from_c_to_i(old._array[i]) - from_c_to_i(i < newn._size ? newn._array[i] : '0') - flag;
             flag = btw < 0 ? 1 : 0;
             if (flag) {
                 old._array[i] = from_i_to_c(btw + SYSTEM);
