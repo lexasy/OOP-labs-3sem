@@ -177,12 +177,12 @@ size_t Twelwe::GetArraySize() const { // Array size getter
     return this->_size;
 }
 
+// Operators reboot
 Twelwe Twelwe::operator+(const Twelwe& other) {
     Twelwe curr(*this);
     return curr.add(other);
 }
 
-// Operators reboot
 Twelwe Twelwe::operator-(const Twelwe& other) {
     Twelwe curr(*this);
     return curr.substraction(other);
