@@ -3,25 +3,47 @@
 Twelwe::Twelwe() : _size(0), _array{nullptr} {} // Default constructor
 
 Twelwe::Twelwe(const size_t& n, u_char t) { // Fill-array constructor
-    _array = new u_char[n];
-    for (size_t i = 0; i < n; ++i)
-        _array[i] = t;
-    _size = n;
+    if (t >= '0' && t <= '9' || t == 'A' || t == 'B') {
+        _array = new u_char[n];
+        for (size_t i = 0; i < n; ++i)
+            _array[i] = t;
+        _size = n;
+    }
 }
 
 Twelwe::Twelwe(const std::initializer_list<u_char>& t) { // Initializer list constructor
     _array = new u_char[t.size()];
     size_t i{0};
-    for (auto& c : t)
-        _array[i++] = c;
-    _size = t.size();
+    int cnt = 0;
+    for (auto& c : t) {
+        if (c >= '0' && c <= '9' || c == 'A' || c == 'B') {
+            _array[i++] = c;
+        } else {
+            cnt++;
+        }
+    }
+    _size = t.size() - cnt;
     std::reverse(_array, _array + _size);
 }
 
 Twelwe::Twelwe(const std::string& t) { // Copy string constructor
-    _array = new u_char[t.size()];
-    _size  = t.size();
-    for (size_t i{0}; i<_size; ++i) _array[i] = t[i];
+    int cnt = 0;
+    for (int i = 0; i < t.size(); i++) {
+        if (t[i] >= '0' && t[i] <= '9' || t[i] == 'A' || t[i] == 'B') {
+            continue;
+        } else {
+            cnt++;
+        }
+    }
+    _array = new u_char[t.size() - cnt];
+    _size  = t.size() - cnt;
+    for (size_t i{0}; i<_size; ++i){
+        if (t[i] >= '0' && t[i] <= '9' || t[i] == 'A' || t[i] == 'B') {
+            _array[i] = t[i];
+        } else {
+            continue; --i;
+        }
+    } 
     std::reverse(_array, _array + _size);
 }
 
