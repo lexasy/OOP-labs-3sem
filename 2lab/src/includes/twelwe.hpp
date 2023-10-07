@@ -22,16 +22,6 @@ class Twelwe {
         // Move constructor
         Twelwe(Twelwe&& other) noexcept;
 
-        // Addition method
-        Twelwe add(const Twelwe& other);
-        // Substraction method
-        Twelwe substraction(const Twelwe& other);
-        // Equality method
-        bool equals(const Twelwe& other) const;
-        // Greater relation method
-        bool more(const Twelwe& other) const;
-        // Lesser relation method
-        bool less(const Twelwe& other) const;
         // Print method
         std::ostream& print(std::ostream& os) const;
 
@@ -54,6 +44,17 @@ class Twelwe {
         // Destructor
         virtual ~Twelwe() noexcept;
     private:
+        // Addition method
+        Twelwe add(const Twelwe& other);
+        // Substraction method
+        Twelwe substraction(const Twelwe& other);
+        // Equality method
+        bool equals(const Twelwe& other) const;
+        // Greater relation method
+        bool more(const Twelwe& other) const;
+        // Lesser relation method
+        bool less(const Twelwe& other) const;
+
         // Size of the buffer
         size_t _size;
         // Pointer of the buffer
