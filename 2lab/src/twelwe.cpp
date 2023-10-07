@@ -1,4 +1,4 @@
-#include "twelwe.h"
+#include "includes/twelwe.hpp"
 
 Twelwe::Twelwe() : _size(0), _array{nullptr} {} // Default constructor
 
@@ -102,7 +102,7 @@ Twelwe Twelwe::add(const Twelwe& other) { // this + other
 Twelwe Twelwe::substraction(const Twelwe& other) { // this - other
     Twelwe old(this->rmvZero()); Twelwe newn(other.rmvZero());
     if (old.less(newn)) {
-        throw std::string{"Can't use negative numbers!"};
+        throw std::logic_error{"Can't use negative numbers!"};
     }
     if (old._size && newn._size) {
         int flag = 0; int btw;
@@ -178,27 +178,27 @@ size_t Twelwe::GetArraySize() const { // Array size getter
 }
 
 // Operators reboot
-Twelwe Twelwe::operator+(const Twelwe& other) {
+Twelwe Twelwe::operator+(const Twelwe& other) const {
     Twelwe curr(*this);
     return curr.add(other);
 }
 
-Twelwe Twelwe::operator-(const Twelwe& other) {
+Twelwe Twelwe::operator-(const Twelwe& other) const {
     Twelwe curr(*this);
     return curr.substraction(other);
 }
 
-bool Twelwe::operator<(const Twelwe& other) {
+bool Twelwe::operator<(const Twelwe& other) const {
     Twelwe curr(*this);
     return curr.less(other);
 }
 
-bool Twelwe::operator>(const Twelwe& other) {
+bool Twelwe::operator>(const Twelwe& other) const {
     Twelwe curr(*this);
     return curr.more(other);
 }
 
-bool Twelwe::operator==(const Twelwe& other) {
+bool Twelwe::operator==(const Twelwe& other) const {
     Twelwe curr(*this);
     return curr.equals(other);
 }

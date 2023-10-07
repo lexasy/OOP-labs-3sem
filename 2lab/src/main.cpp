@@ -1,4 +1,4 @@
-#include "twelwe.h"
+#include "includes/twelwe.hpp"
 
 int main() {
     // Contructors testing
@@ -72,22 +72,22 @@ int main() {
     try {
         Twelwe num18 = num11 - num14;
         num18.print(std::cout); std::cout << "\n";
-    } catch(const std::string& error_message) {
-        std::cout << error_message << "\n";
+    } catch(const std::logic_error& error_message) {
+        std::cerr << "Caught: " << error_message.what() << " Type: " << typeid(error_message).name() << "\n";
     }
     std::cout << "[10-13]Substraction method: ";
     try {
         Twelwe num19 = num10 - num13;
         num19.print(std::cout); std::cout << "\n";
-    } catch(const std::string& error_message) {
-        std::cout << error_message << "\n";
+    } catch(const std::logic_error& error_message) {
+        std::cerr << "Caught: " << error_message.what() << " Type: " << typeid(error_message).name() << "\n";
     }
     std::cout << "[9-12]Substraction method: ";
     try {
         Twelwe num20 = num9 - num12;
         num20.print(std::cout); std::cout << "\n";
-    } catch(const std::string& error_message) {
-        std::cout << error_message << "\n";
+    } catch(const std::logic_error& error_message) {
+        std::cerr << "Caught: " << error_message.what() << " Type: " << typeid(error_message).name() << "\n";
     }
     std::cout << "\n";
 

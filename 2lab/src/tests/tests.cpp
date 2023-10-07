@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "twelwe.h"
+#include "../includes/twelwe.hpp"
 
 TEST(test_01, default_constructor_test) // Default constructor test
 {
@@ -87,7 +87,7 @@ TEST(test_10, substraction_method_test_02)
 TEST(test_11, substraction_method_test_03)
 {
     Twelwe num1("00000"); Twelwe num2("777");
-    EXPECT_THROW(Twelwe result = num1 - num2, std::string);
+    EXPECT_THROW(Twelwe result = num1 - num2, std::logic_error);
 }
 
 TEST(test_12, substraction_method_test_04)

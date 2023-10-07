@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <stdexcept>
 
 #define SYSTEM 12
 
@@ -18,7 +19,7 @@ class Twelwe {
         Twelwe(const std::string& t);
         // Copy constructor
         Twelwe(const Twelwe& other);
-        // Move  constructor
+        // Move constructor
         Twelwe(Twelwe&& other) noexcept;
 
         // Addition method
@@ -35,15 +36,15 @@ class Twelwe {
         std::ostream& print(std::ostream& os) const;
 
         // Operator + reboot
-        Twelwe operator+(const Twelwe& other);
+        Twelwe operator+(const Twelwe& other) const;
         // Operator - reboot
-        Twelwe operator-(const Twelwe& other);
+        Twelwe operator-(const Twelwe& other) const;
         // Operator == reboot
-        bool operator==(const Twelwe& other);
+        bool operator==(const Twelwe& other) const;
         // Operator > reboot
-        bool operator>(const Twelwe& other);
+        bool operator>(const Twelwe& other) const;
         // Operator < reboot
-        bool operator<(const Twelwe& other);
+        bool operator<(const Twelwe& other) const;
 
         // Array pointer getter
         u_char *GetArrayPointer() const;

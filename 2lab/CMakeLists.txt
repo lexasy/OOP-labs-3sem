@@ -7,10 +7,10 @@ include_directories(${GTEST_INCLUDE_DIRS})
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(lab src/main.c++ src/twelwe.c++)
+add_executable(lab src/main.cpp src/twelwe.cpp)
 
 enable_testing()
-add_executable(tests src/tests.c++ src/twelwe.c++)
+add_executable(tests src/tests/tests.cpp src/twelwe.cpp)
 target_link_libraries(tests ${GTEST_LIBRARIES})
 
 add_test(NAME BASIC COMMAND tests)
