@@ -8,7 +8,7 @@
 
 class Twelwe {
     public:
-        // Default onstructor
+        // Default сonstructor
         Twelwe();
         // Fill-array constructor
         Twelwe(const size_t& n, u_char t = 0);
@@ -53,8 +53,9 @@ class Twelwe {
         // Destructor
         virtual ~Twelwe() noexcept;
     private:
-        // Class elements
+        // Size of the buffer
         size_t _size;
+        // Pointer of the buffer
         u_char *_array;
 
         // Lead zero cleaner method
