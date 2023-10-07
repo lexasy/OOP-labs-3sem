@@ -58,33 +58,33 @@ int main() {
     // Methods testing
     std::cout << "Methods testing...\n\n";
     std::cout << "[1+3]Add method: ";
-    Twelwe num15(num1.add(num3));
+    Twelwe num15 = num1 + num3;
     num15.print(std::cout); std::cout << "\n";
     std::cout << "[4+14]Add method: ";
-    Twelwe num16(num4.add(num14));
+    Twelwe num16 = num4 + num14;
     num16.print(std::cout); std::cout << "\n";
     std::cout << "[6+11]Add method: ";
-    Twelwe num17(num6.add(num11));
+    Twelwe num17 = num6 + num11;
     num17.print(std::cout); std::cout << "\n";
     std::cout << "\n";
 
     std::cout << "[11-14]Substraction method: ";
     try {
-        Twelwe num18(num11.substraction(num14));
+        Twelwe num18 = num11 - num14;
         num18.print(std::cout); std::cout << "\n";
     } catch(const std::string& error_message) {
         std::cout << error_message << "\n";
     }
     std::cout << "[10-13]Substraction method: ";
     try {
-        Twelwe num19(num10.substraction(num13));
+        Twelwe num19 = num10 - num13;
         num19.print(std::cout); std::cout << "\n";
     } catch(const std::string& error_message) {
         std::cout << error_message << "\n";
     }
     std::cout << "[9-12]Substraction method: ";
     try {
-        Twelwe num20(num9.substraction(num12));
+        Twelwe num20 = num9 - num12;
         num20.print(std::cout); std::cout << "\n";
     } catch(const std::string& error_message) {
         std::cout << error_message << "\n";
@@ -92,27 +92,35 @@ int main() {
     std::cout << "\n";
 
     Twelwe num21("123AB"); Twelwe num22("0"); Twelwe num23("AABAB"); Twelwe num24("12AB32AA"); Twelwe num25("123AB");
-
+    bool rel = num21 > num22;
     std::cout << "[21>22]Relation method: "; num21.print(std::cout); std::cout << " > "; num22.print(std::cout);
-    std::cout << " -> " << num21.more(num22) << "\n";
+    std::cout << " -> " << rel << "\n";
+    rel = num22 > num23;
     std::cout << "[22>23]Relation method: "; num22.print(std::cout); std::cout << " > "; num23.print(std::cout);
-    std::cout << " -> " << num22.more(num23) << "\n";
+    std::cout << " -> " << rel << "\n";
+    rel = num21 > num25;
     std::cout << "[21>25]Relation method: "; num21.print(std::cout); std::cout << " > "; num25.print(std::cout);
-    std::cout << " -> " << num21.more(num25) << "\n";
+    std::cout << " -> " << rel << "\n";
     std::cout << "\n";
 
+    rel = num21 < num24;
     std::cout << "[21<24]Relation method: "; num21.print(std::cout); std::cout << " < "; num24.print(std::cout);
-    std::cout << " -> " << num21.less(num24) << "\n";
+    std::cout << " -> " << rel << "\n";
+    rel = num24 < num23;
     std::cout << "[24<23]Relation method: "; num24.print(std::cout); std::cout << " < "; num23.print(std::cout);
-    std::cout << " -> " << num24.less(num23) << "\n";
+    std::cout << " -> " << rel << "\n";
+    rel = num21 < num25;
     std::cout << "[21<25]Relation method: "; num21.print(std::cout); std::cout << " < "; num25.print(std::cout);
-    std::cout << " -> " << num21.less(num25) << "\n";
+    std::cout << " -> " << rel << "\n";
     std::cout << "\n";
-
+    
+    rel = num21 == num22;
     std::cout << "[21==22]Relation method: "; num21.print(std::cout); std::cout << " == "; num22.print(std::cout);
-    std::cout << " -> " << num21.equals(num22) << "\n";
+    std::cout << " -> " << rel << "\n";
+    rel = num21 == num25;
     std::cout << "[21==25]Relation method: "; num21.print(std::cout); std::cout << " == "; num25.print(std::cout);
-    std::cout << " -> " << num21.equals(num25) << "\n";
+    std::cout << " -> " << rel << "\n";
+    rel = num23 == num24;
     std::cout << "[23==24]Relation method: "; num23.print(std::cout); std::cout << " == "; num24.print(std::cout);
-    std::cout << " -> " << num23.equals(num24) << "\n";
+    std::cout << " -> " << rel << "\n";
 }

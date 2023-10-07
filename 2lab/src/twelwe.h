@@ -24,6 +24,13 @@ class Twelwe {
         bool less(const Twelwe& other) const;
         std::ostream& print(std::ostream& os) const;
 
+        // Operators reboot
+        Twelwe operator+(const Twelwe& other);
+        Twelwe operator-(const Twelwe& other);
+        bool operator==(const Twelwe& other);
+        bool operator>(const Twelwe& other);
+        bool operator<(const Twelwe& other);
+
         // Getters
         u_char *GetArrayPointer() const;
         size_t GetArraySize() const;
