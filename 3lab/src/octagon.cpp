@@ -1,5 +1,9 @@
 #include "includes/octagon.hpp"
 
+Octagon::Octagon(Point& pt1, Point& pt2, Point& pt3, Point& pt4, Point& pt5, Point& pt6, Point& pt7, Point& pt8) {
+    p1 = pt1; p2 = pt2; p3 = pt3; p4 = pt4; p5 = pt5; p6 = pt6; p7 = pt7; p8 = pt8;
+}
+
 Point Octagon::geometrical_centre() const {
     Point result;
     result.x = (p1.x + p2.x + p3.x + p4.x + p5.x + p6.x + p7.x + p8.x) / 8;

@@ -8,6 +8,9 @@ public:
 	Point(double x, double y) : 
 		x(x), y(y){
 	}
+    void operator=(const Point& pt) {
+        this->x = pt.x; this->y = pt.y;
+    }
 	~Point() = default;
     double x{}; 
 	double y{}; 

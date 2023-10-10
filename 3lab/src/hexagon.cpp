@@ -1,5 +1,9 @@
 #include "includes/hexagon.hpp"
 
+Hexagon::Hexagon(Point& pt1, Point& pt2, Point& pt3, Point& pt4, Point& pt5, Point& pt6) {
+    p1 = pt1; p2 = pt2; p3 = pt3; p4 = pt4; p5 = pt5; p6 = pt6;
+}
+
 Point Hexagon::geometrical_centre() const {
     Point result;
     result.x = (p1.x + p2.x + p3.x + p4.x + p5.x + p6.x) / 6;
