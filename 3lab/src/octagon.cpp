@@ -13,7 +13,6 @@ Point Octagon::geometrical_centre() const {
 
 void Octagon::print_coords() {
     std::cout << "Coordinates of your octagon:\n";
-    std::cout << "         X  Y\n";
     std::cout << "Point1: " << p1;
     std::cout << "Point2: " << p2;
     std::cout << "Point3: " << p3;
@@ -26,7 +25,6 @@ void Octagon::print_coords() {
 
 void Octagon::read_coords() {
     std::cout << "Please type in the coordinates of points of your octagon, order [x,y], separated by spaces:\n";
-    std::cout << "        X Y\n";
     std::cout << "Point1: "; std::cin >> p1;
     std::cout << "Point2: "; std::cin >> p2;
     std::cout << "Point3: "; std::cin >> p3;

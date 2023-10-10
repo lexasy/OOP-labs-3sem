@@ -5,9 +5,7 @@
 class Point {
 public:
     Point() = default;
-	Point(double x, double y) : 
-		x(x), y(y){
-	}
+	Point(double x, double y) : x(x), y(y) {}
     void operator=(const Point& pt) {
         this->x = pt.x; this->y = pt.y;
     }
@@ -15,6 +13,8 @@ public:
     double x{}; 
 	double y{}; 
 };
+
+double length_btw_ptrs(Point p1, Point p2);
 
 inline std::istream& operator>>(std::istream& is, Point& p) {
     double x, y;
