@@ -12,7 +12,7 @@ Point Pentagon::geometrical_centre() const {
 }
 
 void Pentagon::print_coords() {
-    std::cout << "Coordinates of your pentagon:\n";
+    std::cout << "Coordinates of pentagon:\n";
     std::cout << "Point1: " << p1;
     std::cout << "Point2: " << p2;
     std::cout << "Point3: " << p3;
@@ -30,5 +30,22 @@ void Pentagon::read_coords() {
 }
 
 double Pentagon::area() const {
-    return (1 / 4) * sqrt(5 * (5 + 2 * sqrt(5))) * pow(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2), 2);
+    return (1 / 4) * sqrt(5 * (5 + 2 * sqrt(5))) * pow(length_btw_ptrs(p1, p2), 2);
+}
+
+std::string Pentagon::return_type() const {
+    return {"Pentagon"};
+}
+
+void Pentagon::operator=(const Pentagon& fig) {
+    this->p1 = fig.p1; this->p2 = fig.p2; this->p3 = fig.p3; this->p4 = fig.p4; this->p5 = fig.p5;
+}
+
+void Pentagon::operator=(Pentagon&& fig) {
+    this->p1 = fig.p1; this->p2 = fig.p2; this->p3 = fig.p3; this->p4 = fig.p4; this->p5 = fig.p5;
+    fig.p1 = 0; fig.p2 = 0; fig.p3 = 0; fig.p4 = 0; fig.p5 = 0;
+}
+
+bool Pentagon::operator==(const Pentagon& fig) const {
+    return this->area() == fig.area();
 }

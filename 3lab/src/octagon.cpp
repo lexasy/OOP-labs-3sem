@@ -12,7 +12,7 @@ Point Octagon::geometrical_centre() const {
 }
 
 void Octagon::print_coords() {
-    std::cout << "Coordinates of your octagon:\n";
+    std::cout << "Coordinates of octagon:\n";
     std::cout << "Point1: " << p1;
     std::cout << "Point2: " << p2;
     std::cout << "Point3: " << p3;
@@ -36,5 +36,22 @@ void Octagon::read_coords() {
 }
 
 double Octagon::area() const {
-    return 2 * pow(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2), 2) * (1 + sqrt(2));
+    return 2 * pow(length_btw_ptrs(p1, p2), 2) * (1 + sqrt(2));
+}
+
+std::string Octagon::return_type() const {
+    return {"Octagon"};
+}
+
+void Octagon::operator=(const Octagon& fig) {
+    this->p1 = fig.p1; this->p2 = fig.p2; this->p3 = fig.p3; this->p4 = fig.p4; this->p5 = fig.p5; this->p6 = fig.p6; this->p7 = fig.p7; this->p8 = fig.p8;
+}
+
+void Octagon::operator=(Octagon&& fig) {
+    this->p1 = fig.p1; this->p2 = fig.p2; this->p3 = fig.p3; this->p4 = fig.p4; this->p5 = fig.p5; this->p6 = fig.p6; this->p7 = fig.p7; this->p8 = fig.p8;
+    fig.p1 = 0; fig.p2 = 0; fig.p3 = 0; fig.p4 = 0; fig.p5 = 0; fig.p6 = 0; fig.p7 = 0; fig.p8 = 0;
+}
+
+bool Octagon::operator==(const Octagon& fig) const {
+    return this->area() == fig.area();
 }

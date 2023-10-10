@@ -9,6 +9,9 @@ public:
     void operator=(const Point& pt) {
         this->x = pt.x; this->y = pt.y;
     }
+    void operator=(double num) {
+        this->x = num; this->y = num;
+    }
 	~Point() = default;
     double x{}; 
 	double y{}; 

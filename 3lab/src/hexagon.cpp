@@ -12,7 +12,7 @@ Point Hexagon::geometrical_centre() const {
 }
 
 void Hexagon::print_coords() {
-    std::cout << "Coordinates of your hexagon:\n";
+    std::cout << "Coordinates of hexagon:\n";
     std::cout << "Point1: " << p1;
     std::cout << "Point2: " << p2;
     std::cout << "Point3: " << p3;
@@ -33,4 +33,21 @@ void Hexagon::read_coords() {
 
 double Hexagon::area() const {
     return (3 * sqrt(3) * pow(length_btw_ptrs(p1, p2), 2)) / 2;
+}
+
+std::string Hexagon::return_type() const {
+    return {"Hexagon"};
+}
+
+void Hexagon::operator=(const Hexagon& fig) {
+    this->p1 = fig.p1; this->p2 = fig.p2; this->p3 = fig.p3; this->p4 = fig.p4; this->p5 = fig.p5; this->p6 = fig.p6;
+}
+
+void Hexagon::operator=(Hexagon&& fig) {
+    this->p1 = fig.p1; this->p2 = fig.p2; this->p3 = fig.p3; this->p4 = fig.p4; this->p5 = fig.p5; this->p6 = fig.p6;
+    fig.p1 = 0; fig.p2 = 0; fig.p3 = 0; fig.p4 = 0; fig.p5 = 0; fig.p6 = 0;
+}
+
+bool Hexagon::operator==(const Hexagon& fig) const {
+    return this->area() == fig.area();
 }
