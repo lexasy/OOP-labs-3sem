@@ -1,20 +1,38 @@
-#include "includes/figures.hpp"
+#include "includes/octagon.hpp"
 
-Octagon::Octagon() {
-    p1 = new point; p2 = new point; p3 = new point; p4 = new point; p5 = new point; p6 = new point; p7 = new point; p8 = new point;
-}
-
-point *Octagon::geometrical_centre() const {
-    point *result = new point;
-    result->x = (p1->x + p2->x + p3->x + p4->x + p5->x + p6->x + p7->x + p8->x) / 8;
-    result->y = (p1->y + p2->y + p3->y + p4->y + p5->y + p6->y + p7->y + p8->y) / 8;
+Point Octagon::geometrical_centre() const {
+    Point result;
+    result.x = (p1.x + p2.x + p3.x + p4.x + p5.x + p6.x + p7.x + p8.x) / 8;
+    result.y = (p1.y + p2.y + p3.y + p4.y + p5.y + p6.y + p7.y + p8.y) / 8;
     return result;
 }
 
-double Octagon::area() const {
-    return 2 * pow(pow(p2->x - p1->x, 2) + pow(p2->y - p2->y, 2), 2) * (1 + sqrt(2));
+void Octagon::print_coords() {
+    std::cout << "Coordinates of your octagon:\n";
+    std::cout << "         X  Y\n";
+    std::cout << "Point1: " << p1;
+    std::cout << "Point2: " << p2;
+    std::cout << "Point3: " << p3;
+    std::cout << "Point4: " << p4;
+    std::cout << "Point5: " << p5;
+    std::cout << "Point6: " << p6;
+    std::cout << "Point7: " << p7;
+    std::cout << "Point8: " << p8;
 }
 
-Octagon::~Octagon() {
-    delete p1; delete p2; delete p3; delete p4; delete p5; delete p6; delete p7; delete p8;
+void Octagon::read_coords() {
+    std::cout << "Please type in the coordinates of points of your octagon, order [x,y], separated by spaces:\n";
+    std::cout << "        X Y\n";
+    std::cout << "Point1: "; std::cin >> p1;
+    std::cout << "Point2: "; std::cin >> p2;
+    std::cout << "Point3: "; std::cin >> p3;
+    std::cout << "Point4: "; std::cin >> p4;
+    std::cout << "Point5: "; std::cin >> p5;
+    std::cout << "Point6: "; std::cin >> p6;
+    std::cout << "Point7: "; std::cin >> p7;
+    std::cout << "Point8: "; std::cin >> p8;
+}
+
+double Octagon::area() const {
+    return 2 * pow(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2), 2) * (1 + sqrt(2));
 }
