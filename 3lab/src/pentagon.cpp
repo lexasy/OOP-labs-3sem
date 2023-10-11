@@ -30,7 +30,7 @@ void Pentagon::read_coords() {
 }
 
 double Pentagon::area() const {
-    return (1 / 4) * sqrt(5 * (5 + 2 * sqrt(5))) * pow(length_btw_ptrs(p1, p2), 2);
+    return abs(p1.x * p2.y + p2.x * p3.y + p3.x * p4.y + p4.x * p5.y + p5.x * p1.y - p2.x * p1.y - p3.x * p2.y - p4.x * p3.y - p5.x * p4.y - p1.x * p5.y) / 2;
 }
 
 std::string Pentagon::return_type() const {
