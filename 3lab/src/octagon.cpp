@@ -6,8 +6,8 @@ Octagon::Octagon(Point& pt1, Point& pt2, Point& pt3, Point& pt4, Point& pt5, Poi
 
 Point Octagon::geometrical_centre() const {
     Point result;
-    result.x = (p1.x + p2.x + p3.x + p4.x + p5.x + p6.x + p7.x - p8.x + p8.x + p8.x) / 8; // KOSTYL.net
-    result.y = (p1.y + p2.y + p3.y + p4.y + p5.y + p6.y + p7.y + p8.y - p2.y + p2.y) / 8; // KOSTYL.net
+    result.x = (p1.x + p2.x + p3.x + p4.x + p5.x + p6.x + p7.x+ p8.x) / 8;
+    result.y = (p1.y + p2.y + p3.y + p4.y + p5.y + p6.y + p7.y + p8.y) / 8;
     return result;
 }
 

@@ -27,6 +27,6 @@ inline std::istream& operator>>(std::istream& is, Point& p) {
 }
 
 inline std::ostream& operator<<(std::ostream& os, const Point& p) {
-    os << "(" <<  p.x << ", " << p.y << ")\n";
+    os << "(" << std::fixed << p.x << ", " << p.y << ")\n";
     return os;
 }
