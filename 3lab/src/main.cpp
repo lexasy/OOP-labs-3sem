@@ -1,85 +1,51 @@
-#include "includes/pentagon.hpp"
-#include "includes/hexagon.hpp"
-#include "includes/octagon.hpp"
+#include "includes/figure_array.hpp"
 
-void all_figure_methods(Figure **array, int size) {
-    for (int i = 0; i < size; i++) {
-        array[i]->print_coords();
-        std::cout << "\nGeometrical centre of " << array[i]->return_type() << " is point: " << array[i]->geometrical_centre();
-        std::cout << "The area of " << array[i]->return_type() << " is: " << array[i]->area() << "\n\n";
+void all_figure_methods(Figure_array *arr) {
+    for (int i = 0; i < arr->size; i++) {
+        arr->array[i]->print_coords();
+        std::cout << "\nGeometrical centre of " << arr->array[i]->return_type() << " is point: " << arr->array[i]->geometrical_centre();
+        std::cout << "The area of " << arr->array[i]->return_type() << " is: " << arr->array[i]->area() << "\n\n";
     }
 }
 
-double overall_area(Figure **array, int size) {
+double overall_area(Figure_array *arr) {
     double overall_area = 0;
-    for (int i = 0; i < size; i++) {
-        overall_area += array[i]->area();
+    for (int i = 0; i < arr->size; i++) {
+        overall_area += arr->array[i]->area();
     }
     return overall_area;
 }
 
-Figure **del_figure_by_idx(Figure **array, int size, int idx) {
-    Figure **new_array = new Figure*[size - 1]; int flag = 0;
-    for (int i = 0; i < size; i++) {
-        if (i == idx) {
-            flag = 1; continue;
-        }
-        new_array[i - flag] = array[i];
-    }
-    delete[] array;
-    return new_array;
-}
-
 int main() {
-    std::cout << "Now you need to type in how many figures you want to keep in figure array and coordinates of your figures (Press Enter to continue) ";
+    std::cout << "Now you need to type coordinates of your figures (Press Enter to continue) ";
     char c; while ((c = getchar()) != 10) {} std::cout << "\n";
-    int n; std::cout << "How many figures you want to keep in your figure array: "; std::cin >> n;
-    if (n > 3) {
-        std::cerr << "You can't keep in array more than 3 figures!\n"; exit(-1);
-    }
-    Figure **fig_array = new Figure*[n];
-    Pentagon pent; Hexagon hex; Octagon oct;
-    int flagp = 0; int flagh = 0; int flago = 0;
-    for (int i = 0; i < n; i++) {
-        std::cout << "What figure you want to add in the your figure array (pentagon or hexagon or octagon only): ";
-        std::string fig; std::cin >> fig;
-        if (fig == "pentagon") {
-            if (!flagp) {
-                pent.read_coords();
-                fig_array[i] = &pent;
-                flagp = 1;
-            } else {
-                std::cerr << "You alredy have this figure!\n"; exit(-1);
-            }
-        } else if (fig == "hexagon") {
-            if (!flagh) {
-                hex.read_coords();
-                fig_array[i] = &hex;
-                flagh = 1;
-            } else {
-                std::cerr << "You alredy have this figure!\n"; exit(-1);
-            }
-        } else if (fig == "octagon") {
-            if (!flago) {
-                oct.read_coords();
-                fig_array[i] = &oct;
-                flago = 1;
-            } else {
-                std::cerr << "You alredy have this figure!\n"; exit(-1);
-            }
-        } else {
-            std::cerr << "Invalid figure!\n"; exit(-1);
+    std::string input; Figure_array *fig_array = create_array();
+    while (input != "end") {
+        std::cout << "What figure you want to add in the your figure array (pentagon or hexagon or octagon only). If you don't want to add new figures, just type in 'end': ";
+        std::cin >> input;
+        if (input == "pentagon") {
+            Pentagon *pent = new Pentagon;
+            pent->read_coords();
+            append_figure(fig_array, pent);
+        } else if (input == "hexagon") {
+            Hexagon *hex = new Hexagon;
+            hex->read_coords();
+            append_figure(fig_array, hex);
+        } else if (input == "octagon") {
+            Octagon *oct = new Octagon;
+            oct->read_coords();
+            append_figure(fig_array, oct);
         }
     }
     std::cout << "Your array of figures is: [ ";
-    for (int i = 0; i < n; i++) {
-        std::cout << fig_array[i]->return_type() << " ";
+    for (int i = 0; i < fig_array->size; i++) {
+        std::cout << fig_array->array[i]->return_type() << " ";
     }
     std::cout << "]\n";
-    for (int i = 0; i < n; i++) {
-        fig_array[i]->print_coords();
+    for (int i = 0; i < fig_array->size; i++) {
+        fig_array->array[i]->print_coords();
     }
-    delete[] fig_array;
+    destroy_array(fig_array);
     std::cout << "--------------------------------------------------------------------------------------------------\n";
 
     std::cout << "Now we take a look on overloaded operators of copy, move and compare for all figures (Press Enter to continue) ";
@@ -156,44 +122,40 @@ int main() {
 
     std::cout << "Now we take some our previous figures to the figure array and check methods of any figure in the array (Press Enter to continue) ";
     char q; while ((q = getchar()) != 10) {} std::cout << "\n";
-    Figure **fig_array1 = new Figure*[3];
-    fig_array1[0] = &pent2; fig_array1[1] = &hex2; fig_array1[2] = &oct2;
+    Figure_array *fig_array1 = create_array();
+    append_figure(fig_array1, &pent2); append_figure(fig_array1, &hex2); append_figure(fig_array1, &oct2);
     std::cout << "Figures in array: [ ";
     for (int i = 0; i < 3; i++) {
-        std::cout << fig_array1[i]->return_type() << " ";
+        std::cout << fig_array1->array[i]->return_type() << " ";
     }
     std::cout << "]\n";
-    all_figure_methods(fig_array1, 3);
+    all_figure_methods(fig_array1);
     std::cout << "--------------------------------------------------------------------------------------------------\n";
     
     std::cout << "Now we take the previous array and calculate overall area of figures in array (Press Enter to continue) ";
     char y; while ((y = getchar()) != 10) {} std::cout << "\n";
-    std::cout << "Overall area of figures in array is: " << overall_area(fig_array1, 3) << "\n";
+    std::cout << "Overall area of figures in array is: " << overall_area(fig_array1) << "\n";
     std::cout << "--------------------------------------------------------------------------------------------------\n";
 
-    std::cout << "And now we take the previous array and you need to delete some figures (not more than 3) by index from this array (Press Enter to continue) ";
+    std::cout << "And now we take the previous array and you need to delete all figures by index from this array (Press Enter to continue) ";
     char t; while ((t = getchar()) != 10) {} std::cout << "\n";
     std::cout << "Figures in array: [ ";
     for (int i = 0; i < 3; i++) {
-        std::cout << fig_array1[i]->return_type() << " ";
+        std::cout << fig_array1->array[i]->return_type() << " ";
     }
     std::cout << "]\n";
-    u_int16_t d; u_int16_t idx;
-    std::cout << "How many figures you want to delete: "; std::cin >> d;
-    if (d > 3) {
-        std::cerr << "You want to delete too many figures!\n"; exit(-1);
-    }
-    for (int i = 0; i < d; i++) {
+    u_int16_t idx; int sz = fig_array1->size;
+    for (int i = 0; i < sz; i++) {
         std::cout << "Choose idx for delete: "; std::cin >> idx;
-        if (idx > 3 - i - 1) {
+        if (idx > fig_array1->size - 1) {
             std::cerr << "Invalid index!\n"; exit(-1);
         }
-        fig_array1 = del_figure_by_idx(fig_array1, 3 - i, idx);
+        fig_array1->array = rmv_figure(fig_array1, idx); fig_array1->size--;
         std::cout << "Figures in array: [ ";
-        for (int j = 0; j < 3 - i - 1; j++) {
-            std::cout << fig_array1[j]->return_type() << " ";
+        for (int j = 0; j < fig_array1->size; j++) {
+            std::cout << fig_array1->array[j]->return_type() << " ";
         }
         std::cout << "]\n";
     }
-    delete[] fig_array1;
+    destroy_array(fig_array1);
 }
