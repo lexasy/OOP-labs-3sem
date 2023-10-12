@@ -17,8 +17,6 @@ public:
 	double y{}; 
 };
 
-double length_btw_ptrs(Point p1, Point p2);
-
 inline std::istream& operator>>(std::istream& is, Point& p) {
     double x, y;
     is >> x >> y;
