@@ -7,6 +7,7 @@ Figure_array *create_array() {
     return arr;
 }
 
+// Array expander
 static void expand(Figure_array *arr) {
     Figure **new_array = new Figure*[arr->capacity + CAPACITY];
     for (int i = 0; i < arr->size; i++) {

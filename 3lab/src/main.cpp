@@ -1,13 +1,15 @@
 #include "includes/figure_array.hpp"
 
+// Calculates gemetrical centre and area of all figures in figure array
 void all_figure_methods(Figure_array *arr) {
     for (int i = 0; i < arr->size; i++) {
-        arr->array[i]->print_coords();
+        std::cout << arr->array[i];
         std::cout << "\nGeometrical centre of " << arr->array[i]->return_type() << " is point: " << arr->array[i]->geometrical_centre();
         std::cout << "The area of " << arr->array[i]->return_type() << " is: " << static_cast<double>(*arr->array[i]) << "\n\n";
     }
 }
 
+// Calculates overall area of figures in figure array
 double overall_area(Figure_array *arr) {
     double overall_area = 0;
     for (int i = 0; i < arr->size; i++) {
@@ -25,15 +27,15 @@ int main() {
         std::cin >> input;
         if (input == "pentagon") {
             Pentagon *pent = new Pentagon;
-            pent->read_coords();
+            std::cin >> *pent;
             append_figure(fig_array, pent);
         } else if (input == "hexagon") {
             Hexagon *hex = new Hexagon;
-            hex->read_coords();
+            std::cin >> *hex;
             append_figure(fig_array, hex);
         } else if (input == "octagon") {
             Octagon *oct = new Octagon;
-            oct->read_coords();
+            std::cin >> *oct;
             append_figure(fig_array, oct);
         }
     }
@@ -43,7 +45,7 @@ int main() {
     }
     std::cout << "]\n";
     for (int i = 0; i < fig_array->size; i++) {
-        fig_array->array[i]->print_coords();
+        std::cout << fig_array->array[i];
     }
     destroy_array(fig_array);
     std::cout << "--------------------------------------------------------------------------------------------------\n";
@@ -56,20 +58,20 @@ int main() {
     Pentagon pent1(p1pt1, p1pt2, p1pt3, p1pt4, p1pt5);
     Pentagon pent2(p2pt1, p2pt2, p2pt3, p2pt4, p2pt5);
     Pentagon pent3(p3pt1, p3pt2, p3pt3, p3pt4, p3pt5);
-    std::cout << "Pentagon 1:\n"; pent1.print_coords();
-    std::cout << "Pentagon 2:\n"; pent2.print_coords();
-    std::cout << "Pentagon 3:\n"; pent3.print_coords();
+    std::cout << "Pentagon 1:\n" << &pent1;
+    std::cout << "Pentagon 2:\n" << &pent2;
+    std::cout << "Pentagon 3:\n" << &pent3;
     std::cout << "\nPentagon 2 copy to Pentagon 1...\n\n";
     pent1 = pent2;
-    std::cout << "Pentagon 1:\n"; pent1.print_coords();
-    std::cout << "Pentagon 2:\n"; pent2.print_coords();
+    std::cout << "Pentagon 1:\n" << &pent1;
+    std::cout << "Pentagon 2:\n" << &pent2;
     std::cout << "\nPentagon 1 move to Pentagon 3...\n\n";
     pent3 = std::move(pent1);
-    std::cout << "Pentagon 1:\n"; pent1.print_coords();
-    std::cout << "Pentagon 3:\n"; pent3.print_coords();
+    std::cout << "Pentagon 1:\n" << &pent1;
+    std::cout << "Pentagon 3:\n" << &pent3;
     std::cout << "\nPentagon 2 compare with Pentagon 3...\n\n";
-    std::cout << "Pentagon 2:\n"; pent2.print_coords();
-    std::cout << "Pentagon 3:\n"; pent3.print_coords();
+    std::cout << "Pentagon 2:\n" << &pent2;
+    std::cout << "Pentagon 3:\n" << &pent3;
     bool eq = (pent2 == pent3);
     std::cout << "Is Pentagon 2 equal with Pentagon 3? -> " << eq << "\n\n";
 
@@ -79,20 +81,20 @@ int main() {
     Hexagon hex1(h1pt1, h1pt2, h1pt3, h1pt4, h1pt5, h1pt6);
     Hexagon hex2(h2pt1, h2pt2, h2pt3, h2pt4, h2pt5, h2pt6);
     Hexagon hex3(h3pt1, h3pt2, h3pt3, h3pt4, h3pt5, h3pt6);
-    std::cout << "Hexagon 1:\n"; hex1.print_coords();
-    std::cout << "Hexagon 2:\n"; hex2.print_coords();
-    std::cout << "Hexagon 3:\n"; hex3.print_coords();
+    std::cout << "Hexagon 1:\n" << &hex1;
+    std::cout << "Hexagon 2:\n" << &hex2;
+    std::cout << "Hexagon 3:\n" << &hex3;
     std::cout << "\nHexagon 2 copy to Hexagon 1...\n\n";
     hex1 = hex2;
-    std::cout << "Hexagon 1:\n"; hex1.print_coords();
-    std::cout << "Hexagon 2:\n"; hex2.print_coords();
+    std::cout << "Hexagon 1:\n" << &hex1;
+    std::cout << "Hexagon 2:\n" << &hex2;
     std::cout << "\nHexagon 1 move to Hexagon 3...\n\n";
     hex3 = std::move(hex1);
-    std::cout << "Hexagon 1:\n"; hex1.print_coords();
-    std::cout << "Hexagon 3:\n"; hex3.print_coords();
+    std::cout << "Hexagon 1:\n" << &hex1;
+    std::cout << "Hexagon 3:\n" << &hex3;
     std::cout << "\nHexagon 2 compare with Hexagon 3...\n\n";
-    std::cout << "Hexagon 2:\n"; hex2.print_coords();
-    std::cout << "Hexagon 3:\n"; hex3.print_coords();
+    std::cout << "Hexagon 2:\n" << &hex2;
+    std::cout << "Hexagon 3:\n" << &hex3;
     eq = (hex2 == hex3);
     std::cout << "Is Hexagon 2 equal with Hexagon 3? -> " << eq << "\n\n";
 
@@ -102,20 +104,20 @@ int main() {
     Octagon oct1(o1pt1, o1pt2, o1pt3, o1pt4, o1pt5, o1pt6, o1pt7, o1pt8);
     Octagon oct2(o2pt1, o2pt2, o2pt3, o2pt4, o2pt5, o2pt6, o2pt7, o2pt8);
     Octagon oct3(o3pt1, o3pt2, o3pt3, o3pt4, o3pt5, o3pt6, o3pt7, o3pt8);
-    std::cout << "Octagon 1:\n"; oct1.print_coords();
-    std::cout << "Octagon 2:\n"; oct2.print_coords();
-    std::cout << "Octagon 3:\n"; oct3.print_coords();
+    std::cout << "Octagon 1:\n" << &oct1;
+    std::cout << "Octagon 2:\n" << &oct2;
+    std::cout << "Octagon 3:\n" << &oct3;
     std::cout << "\nOctagon 2 copy to Octagon 1...\n\n";
     oct1 = oct2;
-    std::cout << "Octagon 1:\n"; oct1.print_coords();
-    std::cout << "Octagon 2:\n"; oct2.print_coords();
+    std::cout << "Octagon 1:\n" << &oct1;
+    std::cout << "Octagon 2:\n" << &oct2;
     std::cout << "\nOctagon 1 move to Octagon 3...\n\n";
     oct3 = std::move(oct1);
-    std::cout << "Octagon 1:\n"; oct1.print_coords();
-    std::cout << "Octagon 3:\n"; oct3.print_coords();
+    std::cout << "Octagon 1:\n" << &oct1;
+    std::cout << "Octagon 3:\n" << &oct3;
     std::cout << "\nOctagon 2 compare with Octagon 3...\n\n";
-    std::cout << "Octagon 2:\n"; oct2.print_coords();
-    std::cout << "Octagon 3:\n"; oct3.print_coords();
+    std::cout << "Octagon 2:\n" << &oct2;
+    std::cout << "Octagon 3:\n" << &oct3;
     eq = (oct2 == oct3);
     std::cout << "Is Octagon 2 equal with Octagon 3? -> " << eq << "\n";
     std::cout << "--------------------------------------------------------------------------------------------------\n";
