@@ -1,4 +1,4 @@
-#include "includes/pentagon.hpp"
+#include "../includes/pentagon.hpp"
 
 Pentagon::Pentagon() {
     n = 5;
@@ -25,7 +25,7 @@ void Pentagon::operator=(Pentagon&& fig) {
 }
 
 bool Pentagon::operator==(const Pentagon& fig) const {
-    return this->area() == fig.area();
+    return static_cast<double>(*this) == static_cast<double>(fig);
 }
 
 Pentagon::~Pentagon() {

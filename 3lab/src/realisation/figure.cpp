@@ -1,4 +1,4 @@
-#include "includes/figure.hpp"
+#include "../includes/figure.hpp"
 
 Point Figure::geometrical_centre() const {
     Point result;
@@ -7,11 +7,13 @@ Point Figure::geometrical_centre() const {
         result.y += points[i].y;
     }
     result.x /= n; result.y /= n;
+    result.x = round(result.x * 1000) / 1000;
+    result.y = round(result.y * 1000) / 1000;
     return result;
 }
 
-float Figure::area() const {
-    return (n * length_btw_points(points[1], points[0]) * length_btw_points(points[1], points[0]) / 4) * (1 / tan(M_PI / n));
+Figure::operator double() const {
+    return round((n * length_btw_points(points[1], points[0]) * length_btw_points(points[1], points[0]) / 4) * (1 / tan(M_PI / n)) * 1000) / 1000; // round to 3 digits
 }
 
 void Figure::print_coords() {
@@ -26,4 +28,8 @@ void Figure::read_coords() {
     for (int i = 0; i < n; i++) {
         std::cout << "Point" << i + 1 << ": "; std::cin >> points[i];
     }
+}
+
+Point *Figure::get_array_pointer() {
+    return points;
 }

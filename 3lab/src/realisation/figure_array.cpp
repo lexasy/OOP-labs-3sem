@@ -1,4 +1,4 @@
-#include "includes/figure_array.hpp"
+#include "../includes/figure_array.hpp"
 
 Figure_array *create_array() {
     Figure_array *arr = new Figure_array;

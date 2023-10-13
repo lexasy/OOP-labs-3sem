@@ -1,4 +1,4 @@
-#include "includes/hexagon.hpp"
+#include "../includes/hexagon.hpp"
 
 Hexagon::Hexagon() {
     n = 6;
@@ -25,7 +25,7 @@ void Hexagon::operator=(Hexagon&& fig) {
 }
 
 bool Hexagon::operator==(const Hexagon& fig) const {
-    return this->area() == fig.area();
+    return static_cast<double>(*this) == static_cast<double>(fig);
 }
 
 Hexagon::~Hexagon() {

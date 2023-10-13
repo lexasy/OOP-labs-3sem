@@ -1,4 +1,4 @@
-#include "includes/octagon.hpp"
+#include "../includes/octagon.hpp"
 
 Octagon::Octagon() {
     n = 8;
@@ -25,7 +25,7 @@ void Octagon::operator=(Octagon&& fig) {
 }
 
 bool Octagon::operator==(const Octagon& fig) const {
-    return this->area() == fig.area();
+    return static_cast<double>(*this) == static_cast<double>(fig);
 }
 
 Octagon::~Octagon() {

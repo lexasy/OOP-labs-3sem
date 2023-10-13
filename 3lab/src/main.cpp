@@ -4,14 +4,14 @@ void all_figure_methods(Figure_array *arr) {
     for (int i = 0; i < arr->size; i++) {
         arr->array[i]->print_coords();
         std::cout << "\nGeometrical centre of " << arr->array[i]->return_type() << " is point: " << arr->array[i]->geometrical_centre();
-        std::cout << "The area of " << arr->array[i]->return_type() << " is: " << arr->array[i]->area() << "\n\n";
+        std::cout << "The area of " << arr->array[i]->return_type() << " is: " << static_cast<double>(*arr->array[i]) << "\n\n";
     }
 }
 
-float overall_area(Figure_array *arr) {
-    float overall_area = 0;
+double overall_area(Figure_array *arr) {
+    double overall_area = 0;
     for (int i = 0; i < arr->size; i++) {
-        overall_area += arr->array[i]->area();
+        overall_area += static_cast<double>(*arr->array[i]);
     }
     return overall_area;
 }
