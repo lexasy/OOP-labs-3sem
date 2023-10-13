@@ -8,8 +8,8 @@ void all_figure_methods(Figure_array *arr) {
     }
 }
 
-double overall_area(Figure_array *arr) {
-    double overall_area = 0;
+float overall_area(Figure_array *arr) {
+    float overall_area = 0;
     for (int i = 0; i < arr->size; i++) {
         overall_area += arr->array[i]->area();
     }
@@ -50,9 +50,9 @@ int main() {
 
     std::cout << "Now we take a look on overloaded operators of copy, move and compare for all figures (Press Enter to continue) ";
     char s; if ((s = getchar()) == 10) {while ((s = getchar()) != 10) {} } std::cout << "\n";
-    Point p1pt1(0, 1); Point p1pt2(0.951, 0.309); Point p1pt3(0.588, -0.809); Point p1pt4(-0.588, -0.809); Point p1pt5(-0.951, 0.309);
-    Point p2pt1(1, 0); Point p2pt2(0.809, 0.588); Point p2pt3(-0.309, 0.951); Point p2pt4(-0.809, -0.588); Point p2pt5(0.309, -0.951);
-    Point p3pt1(-1, 0); Point p3pt2(-0.809, 0.588); Point p3pt3(0.309, 0.951); Point p3pt4(0.809, -0.588); Point p3pt5(-0.309, -0.951);
+    Point p1pt1(2, 0); Point p1pt2(2 * cos(2 * M_PI / 5), 2 * sin(2 * M_PI / 5)); Point p1pt3(2 * cos(4 * M_PI / 5), 2 * sin(4 * M_PI / 5)); Point p1pt4(2 * cos(6 * M_PI / 5), 2 * sin(6 * M_PI / 5)); Point p1pt5(2 * cos(8 * M_PI / 5), 2 * sin(8 * M_PI / 5));
+    Point p2pt1(1, 0); Point p2pt2(cos(2 * M_PI / 5), sin(2 * M_PI / 5)); Point p2pt3(cos(4 * M_PI / 5), sin(4 * M_PI / 5)); Point p2pt4(cos(6 * M_PI / 5), sin(6 * M_PI / 5)); Point p2pt5(cos(8 * M_PI / 5), sin(8 * M_PI / 5));
+    Point p3pt1(3, 0); Point p3pt2(3 * cos(2 * M_PI / 5), 3 * sin(2 * M_PI / 5)); Point p3pt3(3 * cos(4 * M_PI / 5), 3 * sin(4 * M_PI / 5)); Point p3pt4(3 * cos(6 * M_PI / 5), 3 * sin(6 * M_PI / 5)); Point p3pt5(3 * cos(8 * M_PI / 5), 3 * sin(8 * M_PI / 5));
     Pentagon pent1(p1pt1, p1pt2, p1pt3, p1pt4, p1pt5);
     Pentagon pent2(p2pt1, p2pt2, p2pt3, p2pt4, p2pt5);
     Pentagon pent3(p3pt1, p3pt2, p3pt3, p3pt4, p3pt5);
@@ -73,9 +73,9 @@ int main() {
     bool eq = (pent2 == pent3);
     std::cout << "Is Pentagon 2 equal with Pentagon 3? -> " << eq << "\n\n";
 
-    Point h1pt1(1, 0); Point h1pt2(0.5, sqrt(3) / 2); Point h1pt3(-0.5, sqrt(3) / 2); Point h1pt4(-1, 0); Point h1pt5(-0.5, -sqrt(3) / 2); Point h1pt6(0.5, -sqrt(3) / 2);
-    Point h2pt1(sqrt(3) / 2, 0.5); Point h2pt2(0, 1); Point h2pt3(-sqrt(3) / 2, 0.5); Point h2pt4(-sqrt(3) / 2, -0.5); Point h2pt5(0, -1); Point h2pt6(sqrt(3) / 2, -0.5);
-    Point h3pt1(-0.5, sqrt(3) / 2); Point h3pt2(-1, 0); Point h3pt3(-0.5, -sqrt(3) / 2); Point h3pt4(0.5, -sqrt(3) / 2); Point h3pt5(1, 0); Point h3pt6(0.5, sqrt(3) / 2); 
+    Point h1pt1(2 * cos(2 * M_PI / 6), 2 * sin(2 * M_PI / 6)); Point h1pt2(2 * cos(4 * M_PI / 6), 2 * sin(4 * M_PI / 6)); Point h1pt3(2 * cos(6 * M_PI / 6), 2 * sin(6 * M_PI / 6)); Point h1pt4(2 * cos(8 * M_PI / 6), 2 * sin(8 * M_PI / 6)); Point h1pt5(2 * cos(10 * M_PI / 6), 2 * sin(10 * M_PI / 6)); Point h1pt6(2 * cos(12 * M_PI / 6), 2 * sin(12 * M_PI / 6));
+    Point h2pt1(cos(2 * M_PI / 6), sin(2 * M_PI / 6)); Point h2pt2(cos(4 * M_PI / 6), sin(4 * M_PI / 6)); Point h2pt3(cos(6 * M_PI / 6), sin(6 * M_PI / 6)); Point h2pt4(cos(8 * M_PI / 6), sin(8 * M_PI / 6)); Point h2pt5(cos(10 * M_PI / 6), sin(10 * M_PI / 6)); Point h2pt6(cos(12 * M_PI / 6), sin(12 * M_PI / 6));
+    Point h3pt1(3 * cos(2 * M_PI / 6), 3 * sin(2 * M_PI / 6)); Point h3pt2(3 * cos(4 * M_PI / 6), 3 * sin(4 * M_PI / 6)); Point h3pt3(3 * cos(6 * M_PI / 6), 3 * sin(6 * M_PI / 6)); Point h3pt4(3 * cos(8 * M_PI / 6), 3 * sin(8 * M_PI / 6)); Point h3pt5(3 * cos(10 * M_PI / 6), 3 * sin(10 * M_PI / 6)); Point h3pt6(3 * cos(12 * M_PI / 6), 3 * sin(12 * M_PI / 6)); 
     Hexagon hex1(h1pt1, h1pt2, h1pt3, h1pt4, h1pt5, h1pt6);
     Hexagon hex2(h2pt1, h2pt2, h2pt3, h2pt4, h2pt5, h2pt6);
     Hexagon hex3(h3pt1, h3pt2, h3pt3, h3pt4, h3pt5, h3pt6);
@@ -96,9 +96,9 @@ int main() {
     eq = (hex2 == hex3);
     std::cout << "Is Hexagon 2 equal with Hexagon 3? -> " << eq << "\n\n";
 
-    Point o1pt1(1, 0); Point o1pt2(0.707, 0.707); Point o1pt3(0, 1); Point o1pt4(-0.707, 0.707); Point o1pt5(-1, 0); Point o1pt6(-0.707, -0.707); Point o1pt7(0, -1); Point o1pt8(0.707, -0.707);
-    Point o2pt1(sqrt(2) / 2, sqrt(2) / 2); Point o2pt2(0, 1); Point o2pt3(-sqrt(2) / 2, sqrt(2) / 2); Point o2pt4(-1, 0); Point o2pt5(-sqrt(2) / 2, -sqrt(2) / 2); Point o2pt6(0, -1); Point o2pt7(sqrt(2) / 2, -sqrt(2) / 2); Point o2pt8(1, 0);
-    Point o3pt1(0.5, sqrt(3) / 2); Point o3pt2(-0.5, sqrt(3) / 2); Point o3pt3(-1, 0.5); Point o3pt4(-1, -0.5); Point o3pt5(-0.5, -sqrt(3) / 2); Point o3pt6(0.5, -sqrt(3) / 2); Point o3pt7(1, -0.5); Point o3pt8(1, 0.5); 
+    Point o1pt1(cos(0), sin(0)); Point o1pt2(cos(M_PI / 4), sin(M_PI / 4)); Point o1pt3(cos(M_PI / 2), sin(M_PI / 2)); Point o1pt4(cos(3 * M_PI / 4), sin(3 * M_PI / 4)); Point o1pt5(cos(M_PI), sin(M_PI)); Point o1pt6(cos(5 * M_PI / 4), sin(5 * M_PI / 4)); Point o1pt7(cos(3 * M_PI / 2), sin(3 * M_PI / 4)); Point o1pt8(cos(7 * M_PI / 4), sin(7 * M_PI / 4));
+    Point o2pt1(2 * cos(0), 2 * sin(0)); Point o2pt2(2 * cos(M_PI / 4), 2 * sin(M_PI / 4)); Point o2pt3(2 * cos(M_PI / 2), 2 * sin(M_PI / 2)); Point o2pt4(2 * cos(3 * M_PI / 4), 2 * sin(3 * M_PI / 4)); Point o2pt5(2 * cos(M_PI), 2 * sin(M_PI)); Point o2pt6(2 * cos(5 * M_PI / 4), 2 * sin(5 * M_PI / 4)); Point o2pt7(2 * cos(3 * M_PI / 2), 2 * sin(3 * M_PI / 4)); Point o2pt8(2 * cos(7 * M_PI / 4), 2 * sin(7 * M_PI / 4));
+    Point o3pt1(3 * cos(0), 3 * sin(0)); Point o3pt2(3 * cos(M_PI / 4), 3 * sin(M_PI / 4)); Point o3pt3(3 * cos(M_PI / 2), 3 * sin(M_PI / 2)); Point o3pt4(3 * cos(3 * M_PI / 4), 3 * sin(3 * M_PI / 4)); Point o3pt5(3 * cos(M_PI), 3 * sin(M_PI)); Point o3pt6(3 * cos(5 * M_PI / 4), 3 * sin(5 * M_PI / 4)); Point o3pt7(3 * cos(3 * M_PI / 2), 3 * sin(3 * M_PI / 4)); Point o3pt8(3 * cos(7 * M_PI / 4), 3 * sin(7 * M_PI / 4));
     Octagon oct1(o1pt1, o1pt2, o1pt3, o1pt4, o1pt5, o1pt6, o1pt7, o1pt8);
     Octagon oct2(o2pt1, o2pt2, o2pt3, o2pt4, o2pt5, o2pt6, o2pt7, o2pt8);
     Octagon oct3(o3pt1, o3pt2, o3pt3, o3pt4, o3pt5, o3pt6, o3pt7, o3pt8);
