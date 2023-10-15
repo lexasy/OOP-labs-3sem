@@ -16,7 +16,7 @@ public:
     // Returns type of figure
     virtual std::string return_type() const = 0;
     // Points array pointer getter
-    Point *get_array_pointer();
+    Point *get_array_pointer() const;
     // Ovrloaded double operator for calculating area
     operator double() const;
 protected:

@@ -20,8 +20,10 @@ void Hexagon::operator=(const Hexagon& fig) {
 }
 
 void Hexagon::operator=(Hexagon&& fig) {
-    this->points[0] = fig.points[0]; this->points[1] = fig.points[1]; this->points[2] = fig.points[2]; this->points[3] = fig.points[3]; this->points[4] = fig.points[4]; this->points[5] = fig.points[5];
-    fig.points[0] = 0; fig.points[1] = 0; fig.points[2] = 0; fig.points[3] = 0; fig.points[4] = 0; fig.points[5] = 0;
+    n = fig.n;
+    points = fig.points;
+    fig.n = 0;
+    fig.points = nullptr;
 }
 
 bool Hexagon::operator==(const Hexagon& fig) const {
@@ -29,5 +31,7 @@ bool Hexagon::operator==(const Hexagon& fig) const {
 }
 
 Hexagon::~Hexagon() {
+    n = 0;
     delete[] points;
+    points = nullptr;
 }

@@ -20,8 +20,10 @@ void Octagon::operator=(const Octagon& fig) {
 }
 
 void Octagon::operator=(Octagon&& fig) {
-    this->points[0] = fig.points[0]; this->points[1] = fig.points[1]; this->points[2] = fig.points[2]; this->points[3] = fig.points[3]; this->points[4] = fig.points[4]; this->points[5] = fig.points[5]; this->points[6] = fig.points[6]; this->points[7] = fig.points[7];
-    fig.points[0] = 0; fig.points[1] = 0; fig.points[2] = 0; fig.points[3] = 0; fig.points[4] = 0; fig.points[5] = 0; fig.points[6] = 0; fig.points[7] = 0;
+    n = fig.n;
+    points = fig.points;
+    fig.n = 0;
+    fig.points = nullptr;
 }
 
 bool Octagon::operator==(const Octagon& fig) const {
@@ -29,5 +31,7 @@ bool Octagon::operator==(const Octagon& fig) const {
 }
 
 Octagon::~Octagon() {
+    n = 0;
     delete[] points;
+    points = nullptr;
 }

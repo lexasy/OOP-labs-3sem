@@ -39,12 +39,9 @@ Figure **rmv_figure(Figure_array *arr, int idx) {
 }
 
 void destroy_array(Figure_array *arr) {
-    if (arr->size) {
-        for (int i = 0; i < arr->size; i++) {
-            delete arr->array[i];
-        }
-    }
     arr->capacity = 0; arr->size = 0;
     delete[] arr->array;
-    delete arr;
+    arr->array = nullptr;
+    delete[] arr;
+    arr = nullptr;
 }
