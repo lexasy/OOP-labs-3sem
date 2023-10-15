@@ -4,16 +4,23 @@
 void all_figure_methods(Figure_array *arr) {
     for (int i = 0; i < arr->size; i++) {
         std::cout << arr->array[i];
-        std::cout << "\nGeometrical centre of " << arr->array[i]->return_type() << " is point: " << arr->array[i]->geometrical_centre();
-        std::cout << "The area of " << arr->array[i]->return_type() << " is: " << static_cast<double>(*arr->array[i]) << "\n\n";
+        try {
+            std::cout << "\nGeometrical centre of " << arr->array[i]->return_type() << " is point: " << arr->array[i]->geometrical_centre();
+            std::cout << "The area of " << arr->array[i]->return_type() << " is: " << static_cast<double>(*arr->array[i]) << "\n\n";
+        } catch (const std::logic_error& error_message) {
+            std::cerr << "Caught: " << error_message.what() << " Type: " << typeid(error_message).name() << "\n";
+        }
     }
 }
-
 // Calculates overall area of figures in figure array
 double overall_area(Figure_array *arr) {
     double overall_area = 0;
     for (int i = 0; i < arr->size; i++) {
-        overall_area += static_cast<double>(*arr->array[i]);
+        try {
+            overall_area += static_cast<double>(*arr->array[i]);
+        } catch (const std::logic_error& error_message) {
+            std::cerr << "Caught: " << error_message.what() << " Type: " << typeid(error_message).name() << "\n";
+        }
     }
     return overall_area;
 }
