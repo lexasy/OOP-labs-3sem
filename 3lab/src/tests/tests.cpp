@@ -332,6 +332,37 @@ TEST(test_39, exception_geometrical_centre_test)
     EXPECT_THROW(oct.geometrical_centre(), std::logic_error);
 }
 
+TEST(test_40, default_constructor_area_test)
+{
+    Pentagon pent; Hexagon hex; Octagon oct;
+    ASSERT_TRUE(static_cast<double>(pent) == 0);
+    ASSERT_TRUE(static_cast<double>(hex) == 0);
+    ASSERT_TRUE(static_cast<double>(oct) == 0);
+}
+
+TEST(test_41, default_constructor_geometrical_centre_test) 
+{
+    Pentagon pent; Hexagon hex; Octagon oct;
+    Point p;
+    ASSERT_TRUE(pent.geometrical_centre() == p);
+    ASSERT_TRUE(hex.geometrical_centre() == p);
+    ASSERT_TRUE(oct.geometrical_centre() == p);
+}
+
+TEST(test_42, default_and_not_default_test)
+{
+    Pentagon pent1; Hexagon hex1; Octagon oct1;
+    Point p3pt1(0, 0); Point p3pt2(0, 0); Point p3pt3(0, 0); Point p3pt4(0, 0); Point p3pt5(0, 0);
+    Point h3pt1(0, 0); Point h3pt2(0, 0); Point h3pt3(0, 0); Point h3pt4(0, 0); Point h3pt5(0, 0); Point h3pt6(0, 0); 
+    Point o3pt1(0, 0); Point o3pt2(0, 0); Point o3pt3(0, 0); Point o3pt4(0, 0); Point o3pt5(0, 0); Point o3pt6(0, 0); Point o3pt7(0, 0); Point o3pt8(0, 0);
+    Pentagon pent2(p3pt1, p3pt2, p3pt3, p3pt4, p3pt5);
+    Hexagon hex2(h3pt1, h3pt2, h3pt3, h3pt4, h3pt5, h3pt6);
+    Octagon oct2(o3pt1, o3pt2, o3pt3, o3pt4, o3pt5, o3pt6, o3pt7, o3pt8);
+    ASSERT_TRUE(pent1 == pent2);
+    ASSERT_TRUE(hex1 == hex2);
+    ASSERT_TRUE(oct1 == oct2);
+}
+
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

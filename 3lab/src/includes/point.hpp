@@ -19,7 +19,7 @@ public:
         this->x = num; this->y = num;
     }
     // Overloaded compare operator
-    bool operator==(Point& p) {
+    bool operator==(Point& p) const {
         return this->x == p.x && this->y == p.y;
     }
     // Destructor
