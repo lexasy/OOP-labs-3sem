@@ -22,12 +22,6 @@ public:
     void operator=(const Pentagon<T>& fig) {
         this->points[0] = fig.points[0]; this->points[1] = fig.points[1]; this->points[2] = fig.points[2]; this->points[3] = fig.points[3]; this->points[4] = fig.points[4];
     }
-    void operator=(Pentagon<T>&& fig) {
-        this->n = fig.n;
-        this->points = fig.points;
-        fig.n = 0;
-        fig.points = nullptr;
-    }
     bool operator==(const Pentagon<T>& fig) const {
         return static_cast<double>(*this) == static_cast<double>(fig);
     }

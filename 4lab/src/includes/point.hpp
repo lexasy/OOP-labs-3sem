@@ -4,7 +4,7 @@
 #include <concepts>
 
 template <typename T>
-concept Numeric = std::integral<T> || std::floating_point<T>;
+concept Numeric = (std::integral<T> || std::floating_point<T>) && !std::same_as<T, bool> && !std::same_as<T, char>;
 
 template <Numeric T>
 class Point {
