@@ -10,18 +10,10 @@ public:
 
     friend inline std::istream& operator>>(std::istream& is, Figure<T>& fig) {
         std::cout << "Please type in the coordinates of points of your " << fig.return_type() << ", order [x,y], separated by spaces:\n";
-        for (int i = 0; i < fig.n; i++) {
+        for (size_t i = 0; i < fig.n; i++) {
             std::cout << "Point" << i + 1 << ": "; is >> fig.points[i];
         }
         return is;
-    }
-
-    friend inline std::ostream& operator<<(std::ostream& os, std::shared_ptr<Figure<T>> fig) {
-        os << "Coordinates of " << fig->return_type() << ":\n";
-        for (int i = 0; i < fig->n; i++) {
-            os << "Point" << i + 1 << ": " << fig->points[i];
-        }
-        return os;
     }
     
     operator double() const {
@@ -35,6 +27,13 @@ public:
 
     std::shared_ptr<Point<T>[]> points_array_pointer_getter() {
         return this->points;
+    }
+
+    void print_coords() {
+        std::cout << "Coordinates of " << this->return_type() << ":\n";
+        for (size_t i = 0; i < this->n; i++) {
+            std::cout << "Point" << i + 1 << ": " << this->points[i];
+        }
     }
 
     Point<T> geometrical_centre() const {

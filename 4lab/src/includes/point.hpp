@@ -9,19 +9,6 @@ concept Numeric = std::integral<T> || std::floating_point<T>;
 template <Numeric T>
 class Point {
 public:
-    friend inline std::istream& operator>>(std::istream& is, Point<T>& pt) {
-        T x, y;
-        is >> x >> y;
-        pt.coords.first = x; pt.coords.second = y;
-        return is;
-    } 
-    friend inline std::ostream& operator<<(std::ostream& os, const Point<T>& pt) {
-        os << "(" << std::fixed << pt.coords.first << ", " << pt.coords.second << ")\n";
-        return os;
-    }
-    friend double length_btw_points(const Point<T>& pt1, const Point<T>& pt2) {
-        return sqrt((pt2.coords.first - pt1.coords.first) * (pt2.coords.first - pt1.coords.first) + (pt2.coords.second - pt1.coords.second) * (pt2.coords.second - pt1.coords.second));
-    }
     Point() = default;
     Point(T x, T y) : coords(x, y) {}
     void operator=(const Point& pt) {
@@ -34,7 +21,25 @@ public:
     bool operator==(const Point& pt) const {
         return this->coords == pt.coords;
     }
-    ~Point() = default;
-private:
     std::pair<T, T> coords;
+    ~Point() = default;
 };
+
+template <Numeric T>
+inline std::istream& operator>>(std::istream& is, Point<T>& pt) {
+    T x, y;
+    is >> x >> y;
+    pt.coords.first = x; pt.coords.second = y;
+    return is;
+} 
+
+template<Numeric T>
+inline std::ostream& operator<<(std::ostream& os, const Point<T>& pt) {
+    os << "(" << std::fixed << pt.coords.first << ", " << pt.coords.second << ")\n";
+    return os;
+}
+
+template <Numeric T>
+double length_btw_points(const Point<T>& pt1, const Point<T>& pt2) {
+    return sqrt((pt2.coords.first - pt1.coords.first) * (pt2.coords.first - pt1.coords.first) + (pt2.coords.second - pt1.coords.second) * (pt2.coords.second - pt1.coords.second));
+}
