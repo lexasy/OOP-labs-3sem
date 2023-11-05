@@ -3,7 +3,7 @@
 #include <bits/stdc++.h>
 #include <concepts>
 
-template<typename T>
+template <typename T>
 concept Numeric = std::integral<T> || std::floating_point<T>;
 
 template <Numeric T>
@@ -29,7 +29,7 @@ template <Numeric T>
 inline std::istream& operator>>(std::istream& is, Point<T>& pt) {
     T x, y;
     is >> x >> y;
-    pt.coords(x, y);
+    pt.coords.first = x; pt.coords.second = y;
     return is;
 } 
 
@@ -40,4 +40,6 @@ inline std::ostream& operator<<(std::ostream& os, const Point<T>& pt) {
 }
 
 template<Numeric T>
-double length_btw_points(const Point<T>& pt1, const Point<T>& pt2);
+double length_btw_points(const Point<T>& pt1, const Point<T>& pt2) {
+    return sqrt((pt2.coords.first - pt1.coords.first) * (pt2.coords.first - pt1.coords.first) + (pt2.coords.second - pt1.coords.second) * (pt2.coords.second - pt1.coords.second));
+}

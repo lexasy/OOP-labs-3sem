@@ -4,10 +4,10 @@ project(lab)
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# add_executable(lab src/realisation/point.cpp src/realisation/figure.cpp src/realisation/pentagon.cpp src/realisation/hexagon.cpp src/realisation/octagon.cpp src/realisation/figure_array.cpp src/main.cpp)
+add_executable(lab src/main.cpp)
 
 # enable_testing()
 # add_executable(tests src/realisation/point.cpp src/realisation/figure.cpp src/realisation/pentagon.cpp src/realisation/hexagon.cpp src/realisation/octagon.cpp src/realisation/figure_array.cpp src/tests/tests.cpp)
