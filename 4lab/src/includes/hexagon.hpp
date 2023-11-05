@@ -3,19 +3,8 @@
 template <Numeric T>
 class Hexagon final : public Figure<T> {
 public:
-    friend std::istream& operator>>(std::istream& is, Hexagon<T>& fig) {
-        std::cout << "Please type in the coordinates of points of your hexagon, order [x,y], separated by spaces:\n";
-        for (size_t i = 0; i < fig.n; i++) {
-            std::cout << "Point" << i + 1 << ": "; is >> fig.points[i];
-        }
-        return is;
-    }
-    friend std::ostream& operator<<(std::ostream& os, Hexagon<T>& fig) {
-        os << "Coordinates of hexagon:\n";
-        for (size_t i = 0; i < fig.n; i++) {
-            os << "Point" << i + 1 << ": " << fig.points[i];
-        }
-        return os;
+    const std::string return_type() const override {
+        return {"Hexagon"};
     }
     Hexagon() {
         this->n = 6;

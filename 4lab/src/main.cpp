@@ -1,7 +1,7 @@
 #include "includes/figure_array.hpp"
 
 int main() {
-    Point<int> pt1(1, 1); Point<int> pt2(1, 1); Point<int> pt3(1, 1); Point<int> pt4(1, 1); Point<int> pt5(1, 1);
-    std::cout << length_btw_points(pt1,  pt2) << "\n";
-    // Pentagon<int> pent;  std::cin >> pent; std::cout << pent;
+    Pentagon<int> pent; std::cin >> pent;
+    Figure_array<std::shared_ptr<Figure<int>>> array; array.append_figure(std::make_shared<Pentagon<int>>(pent.points_array_pointer_getter()[0], pent.points_array_pointer_getter()[1], pent.points_array_pointer_getter()[2], pent.points_array_pointer_getter()[3], pent.points_array_pointer_getter()[4]));
+    std::cout << *array[0] << "\n";
 }

@@ -3,19 +3,8 @@
 template <Numeric T>
 class Octagon final : public Figure<T> {
 public:
-    friend std::istream& operator>>(std::istream& is, Octagon<T>& fig) {
-        std::cout << "Please type in the coordinates of points of your octagon, order [x,y], separated by spaces:\n";
-        for (size_t i = 0; i < fig.n; i++) {
-            std::cout << "Point" << i + 1 << ": "; is >> fig.points[i];
-        }
-        return is;
-    }
-    friend std::ostream& operator<<(std::ostream& os, Octagon<T>& fig) {
-        os << "Coordinates of octagon:\n";
-        for (size_t i = 0; i < fig.n; i++) {
-            os << "Point" << i + 1 << ": " << fig.points[i];
-        }
-        return os;
+    const std::string return_type() const override {
+        return {"Octagon"};
     }
     Octagon() {
         this->n = 8;

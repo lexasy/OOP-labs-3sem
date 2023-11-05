@@ -3,19 +3,8 @@
 template <Numeric T>
 class Pentagon final : public Figure<T> {
 public:
-    friend std::istream& operator>>(std::istream& is, Pentagon<T>& fig) {
-        std::cout << "Please type in the coordinates of points of your pentagon, order [x,y], separated by spaces:\n";
-        for (size_t i = 0; i < fig.n; i++) {
-            std::cout << "Point" << i + 1 << ": "; is >> fig.points[i];
-        }
-        return is;
-    }
-    friend std::ostream& operator<<(std::ostream& os, Pentagon<T>& fig) {
-        os << "Coordinates of pentagon:\n";
-        for (size_t i = 0; i < fig.n; i++) {
-            os << "Point" << i + 1 << ": " << fig.points[i];
-        }
-        return os;
+    const std::string return_type() const override {
+        return {"Pentagon"};
     }
     Pentagon() {
         this->n = 5;
@@ -38,5 +27,4 @@ public:
     bool operator==(const Pentagon<T>& fig) const {
         return static_cast<double>(*this) == static_cast<double>(fig);
     }
-    ~Pentagon() = default;
 };

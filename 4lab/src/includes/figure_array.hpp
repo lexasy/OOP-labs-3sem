@@ -4,14 +4,20 @@
 
 #define CAPACITY 10
 
-template <Numeric T>
+template <class T>
+concept Arrayable = std::is_default_constructible<T>::value;
+
+template <Arrayable T>
 class Figure_array {
 public:
     Figure_array() {
-        this->array = std::shared_ptr<std::shared_ptr<Figure<T>>[]>(new std::shared_ptr<Figure<T>>[CAPACITY]);
+        this->array = std::shared_ptr<T[]>(new T[CAPACITY]);
         this->size = 0; this->capacity = CAPACITY;
     }
-    void append_figure(std::shared_ptr<Figure<T>> fig) {
+    T operator[](size_t idx) {
+        return this->array[idx];
+    }
+    void append_figure(T fig) {
         if (this->size == this->capacity) {
             this->expand();
         }
@@ -23,9 +29,10 @@ public:
         for (size_t i = idx; i < this->size - 1; i++) {
             this->array[i] = this->array[i + 1];
         }
+        this->array[this->size - 1] = nullptr;
         this->size--;
     }
-    std::shared_ptr<std::shared_ptr<Figure<T>>[]> array;
+    std::shared_ptr<T[]> array;
     size_t size;
     ~Figure_array() {
         this->size = 0; this->capacity = 0;
@@ -33,7 +40,7 @@ public:
 private:
     size_t capacity;
     void expand() {
-        std::shared_ptr<std::shared_ptr<Figure<T>>[]> new_array = std::shared_ptr<std::shared_ptr<Figure<T>>[]>(new std::shared_ptr<Figure<T>>[this->capacity + CAPACITY]);
+        std::shared_ptr<T[]> new_array = std::shared_ptr<T[]>(new T[this->capacity + CAPACITY]);
         for (size_t i = 0; i < this->size; i++) {
             new_array[i] = this->array[i];
         }
