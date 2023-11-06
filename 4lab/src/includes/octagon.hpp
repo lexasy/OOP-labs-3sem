@@ -1,15 +1,19 @@
 #include "figure.hpp"
 
+// Octagon class (Figure heir) with Points<T>
 template <Numeric T>
 class Octagon final : public Figure<T> {
 public:
+    // Virtual return type of figure method
     const std::string return_type() const override {
         return {"Octagon"};
     }
+    // Default constructor
     Octagon() {
         this->n = 8;
         this->points = std::shared_ptr<Point<T>[]>(new Point<T>[this->n]);
     }
+    // Copy points constructor
     Octagon(Point<T>& pt1, Point<T>& pt2, Point<T>& pt3, Point<T>& pt4, Point<T>& pt5, Point<T>& pt6, Point<T>& pt7, Point<T>& pt8) {
         this->n = 8;
         this->points = std::shared_ptr<Point<T>[]>(new Point<T>[this->n]);
@@ -19,11 +23,14 @@ public:
         this->n = fig.n;
         this->points = fig.points;
     }
+    // Overloaded =(copy) operator
     void operator=(const Octagon<T>& fig) {
         this->points[0] = fig.points[0]; this->points[1] = fig.points[1]; this->points[2] = fig.points[2]; this->points[3] = fig.points[3]; this->points[4] = fig.points[4]; this->points[5] = fig.points[5]; this->points[6] = fig.points[6]; this->points[7] = fig.points[7];
     }
+    // Overloaded ==(compare) operator
     bool operator==(const Octagon<T>& fig) const {
         return static_cast<double>(*this) == static_cast<double>(fig);
     }
+    // Destructor
     ~Octagon() = default;
 };
