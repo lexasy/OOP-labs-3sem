@@ -105,7 +105,7 @@ int main() {
     fig_array1.append_figure(std::make_shared<Hexagon<double>>(hex2));
     fig_array1.append_figure(std::make_shared<Octagon<double>>(oct2));
     std::cout << "Figures in array: [ ";
-    for (int i = 0; i < 3; i++) {
+    for (size_t i = 0; i < fig_array1.size; i++) {
         std::cout << fig_array1[i]->return_type() << " ";
     }
     std::cout << "]\n";
@@ -120,7 +120,7 @@ int main() {
     std::cout << "And now we take the previous array and you need to delete all figures by index from this array (Press Enter to continue) ";
     char t; while ((t = getchar()) != 10) {} std::cout << "\n";
     std::cout << "Figures in array: [ ";
-    for (int i = 0; i < 3; i++) {
+    for (size_t i = 0; i < fig_array1.size; i++) {
         std::cout << fig_array1[i]->return_type() << " ";
     }
     std::cout << "]\n";
@@ -132,7 +132,7 @@ int main() {
         }
         fig_array1.rmv_figure(idx);
         std::cout << "Figures in array: [ ";
-        for (int j = 0; j < fig_array1.size; j++) {
+        for (size_t j = 0; j < fig_array1.size; j++) {
             std::cout << fig_array1[j]->return_type() << " ";
         }
         std::cout << "]\n";

@@ -32,12 +32,12 @@ public:
         this->array[this->size - 1] = nullptr;
         this->size--;
     }
-    std::shared_ptr<T[]> array;
     size_t size;
     ~Figure_array() {
         this->size = 0; this->capacity = 0;
     }
 private:
+    std::shared_ptr<T[]> array;
     size_t capacity;
     void expand() {
         std::shared_ptr<T[]> new_array = std::shared_ptr<T[]>(new T[this->capacity + CAPACITY]);

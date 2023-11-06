@@ -124,6 +124,114 @@ TEST(test_15, figure_array_test)
     ASSERT_TRUE(fig_array[2]->return_type() == "Octagon");
 }
 
+TEST(test_16, figure_array_test)
+{
+    Pentagon<double> pent; Hexagon<double> hex; Octagon<double> oct;
+    Figure_array<std::shared_ptr<Figure<double>>> fig_array;
+    fig_array.append_figure(std::make_shared<Pentagon<double>>(pent));
+    fig_array.append_figure(std::make_shared<Hexagon<double>>(hex));
+    fig_array.append_figure(std::make_shared<Octagon<double>>(oct));
+    fig_array.rmv_figure(2);
+    ASSERT_TRUE(fig_array[0]->return_type() == "Pentagon");
+    ASSERT_TRUE(fig_array[1]->return_type() == "Hexagon");
+}
+
+TEST(test_17, figure_array_test)
+{
+    Pentagon<double> pent; Hexagon<double> hex; Octagon<double> oct;
+    Figure_array<std::shared_ptr<Figure<double>>> fig_array;
+    fig_array.append_figure(std::make_shared<Pentagon<double>>(pent));
+    fig_array.append_figure(std::make_shared<Hexagon<double>>(hex));
+    fig_array.append_figure(std::make_shared<Octagon<double>>(oct));
+    fig_array.rmv_figure(1);
+    ASSERT_TRUE(fig_array[0]->return_type() == "Pentagon");
+    ASSERT_TRUE(fig_array[1]->return_type() == "Octagon");
+}
+
+TEST(test_18, figure_array_test)
+{
+    Pentagon<double> pent; Hexagon<double> hex; Octagon<double> oct;
+    Figure_array<std::shared_ptr<Figure<double>>> fig_array;
+    fig_array.append_figure(std::make_shared<Pentagon<double>>(pent));
+    fig_array.append_figure(std::make_shared<Hexagon<double>>(hex));
+    fig_array.append_figure(std::make_shared<Octagon<double>>(oct));
+    fig_array.rmv_figure(0);
+    ASSERT_TRUE(fig_array[0]->return_type() == "Hexagon");
+    ASSERT_TRUE(fig_array[1]->return_type() == "Octagon");
+}
+
+TEST(test_19, exception_area_test)
+{
+    Point<int> p1(0, 0); Point<int> p2(0, 1); Point<int> p3(1, 0); Point<int> p4(1, 1); Point<int> p5(2, 2);
+    Pentagon<int> pent(p1, p2, p3, p4, p5);
+    EXPECT_THROW(static_cast<double>(pent), std::logic_error);
+}
+
+TEST(test_20, exception_area_test)
+{
+    Point<double> p1(0, 0); Point<double> p2(0, 1); Point<double> p3(1, 0); Point<double> p4(1, 1); Point<double> p5(2, 2); Point<double> p6(3, 3);
+    Hexagon<double> hex(p1, p2, p3, p4, p5, p6);
+    EXPECT_THROW(static_cast<double>(hex), std::logic_error);
+}
+
+TEST(test_21, exception_area_test)
+{
+    Point<float> p1(0, 0); Point<float> p2(0, 1); Point<float> p3(1, 0); Point<float> p4(1, 1); Point<float> p5(2, 2); Point<float> p6(3, 3); Point<float> p7(4, 3); Point<float> p8(3 ,4);
+    Octagon<float> oct(p1, p2, p3, p4, p5, p6, p7, p8);
+    EXPECT_THROW(static_cast<double>(oct), std::logic_error);
+}
+
+TEST(test_22, exception_geometrical_centre_test)
+{
+    Point<float> p1(0, 0); Point<float> p2(0, 1); Point<float> p3(1, 0); Point<float> p4(1, 1); Point<float> p5(2, 2);
+    Pentagon<float> pent(p1, p2, p3, p4, p5);
+    EXPECT_THROW(pent.geometrical_centre(), std::logic_error);
+}
+
+TEST(test_23, exception_geometrical_centre_test)
+{
+    Point<double> p1(0, 0); Point<double> p2(0, 1); Point<double> p3(1, 0); Point<double> p4(1, 1); Point<double> p5(2, 2); Point<double> p6(3, 3);
+    Hexagon<double> hex(p1, p2, p3, p4, p5, p6);
+    EXPECT_THROW(hex.geometrical_centre(), std::logic_error);
+}
+
+TEST(test_24, exception_geometrical_centre_test)
+{
+    Point<long> p1(0, 0); Point<long> p2(0, 1); Point<long> p3(1, 0); Point<long> p4(1, 1); Point<long> p5(2, 2); Point<long> p6(3, 3); Point<long> p7(4, 3); Point<long> p8(3 ,4);
+    Octagon<long> oct(p1, p2, p3, p4, p5, p6, p7, p8);
+    EXPECT_THROW(oct.geometrical_centre(), std::logic_error);
+}
+
+TEST(test_25, default_constructor_area_test)
+{
+    Pentagon<int> pent; Hexagon<double> hex; Octagon<long double> oct;
+    ASSERT_TRUE(static_cast<double>(pent) == 0);
+    ASSERT_TRUE(static_cast<double>(hex) == 0);
+    ASSERT_TRUE(static_cast<double>(oct) == 0);
+}
+
+TEST(test_26, default_constructor_geometrical_centre_test) 
+{
+    Pentagon<int> pent; Hexagon<int> hex; Octagon<int> oct;
+    Point<int> p;
+    ASSERT_TRUE(pent.geometrical_centre() == p);
+    ASSERT_TRUE(hex.geometrical_centre() == p);
+    ASSERT_TRUE(oct.geometrical_centre() == p);
+}
+
+TEST(test_27, default_and_not_default_test)
+{
+    Pentagon<double> pent1; Hexagon<long> hex1; Octagon<unsigned> oct1;
+    Point<double> p3pt1(0, 0); Point<double> p3pt2(0, 0); Point<double> p3pt3(0, 0); Point<double> p3pt4(0, 0); Point<double> p3pt5(0, 0);
+    Point<long> h3pt1(0, 0); Point<long> h3pt2(0, 0); Point<long> h3pt3(0, 0); Point<long> h3pt4(0, 0); Point<long> h3pt5(0, 0); Point<long> h3pt6(0, 0); 
+    Point<unsigned> o3pt1(0, 0); Point<unsigned> o3pt2(0, 0); Point<unsigned> o3pt3(0, 0); Point<unsigned> o3pt4(0, 0); Point<unsigned> o3pt5(0, 0); Point<unsigned> o3pt6(0, 0); Point<unsigned> o3pt7(0, 0); Point<unsigned> o3pt8(0, 0);
+    Pentagon pent2(p3pt1, p3pt2, p3pt3, p3pt4, p3pt5);
+    Hexagon hex2(h3pt1, h3pt2, h3pt3, h3pt4, h3pt5, h3pt6);
+    Octagon oct2(o3pt1, o3pt2, o3pt3, o3pt4, o3pt5, o3pt6, o3pt7, o3pt8);
+    ASSERT_TRUE(pent1 == pent2);
+    ASSERT_TRUE(hex1 == hex2);
+    ASSERT_TRUE(oct1 == oct2);
+}
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
