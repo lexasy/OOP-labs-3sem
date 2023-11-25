@@ -1,26 +1,28 @@
 #pragma once
 
 #include <deque>
+#include <cstdlib>
 
 namespace my_nsp {
     template <class T, std::size_t BLOCK_SIZE>
     class Allocator {
     private:
-        std::deque<T *> _deque;
-        T *_buffer;        
+        std::deque<T *> _free_blocks;
+        T _used_blocks[BLOCK_SIZE];
     public:
         using value_type = T;
         using pointer = T *;
         using const_pointer = const T *;
         using size_type = std::size_t;
 
-        Allocator() : _deque(), _buffer(nullptr) {
+        Allocator() {
             static_assert(BLOCK_SIZE > 0);
+            for (std::size_t i = 0; i < BLOCK_SIZE; i++) {
+                _free_blocks.push_back(&_used_blocks[i]);
+            }
         }
 
-        ~Allocator() {
-            delete[] _buffer;
-        }
+        ~Allocator() {}
 
         template <typename U>
         struct rebind {
@@ -28,25 +30,21 @@ namespace my_nsp {
         };
 
         T* allocate(const std::size_t& n) {
-            if (_buffer == nullptr) {
-                _buffer = new T[BLOCK_SIZE];
-                for (std::size_t i = 0; i < BLOCK_SIZE; i++) {
-                    _deque.push_back(&_buffer[i]);
-                }
-            }
-            if (_deque.size() < n) {
+            if (_free_blocks.size() < n) {
                 throw std::bad_alloc();
             } else {
                 T *ptr = nullptr;
                 for (std::size_t i = 0; i < n; i++) {
-                    ptr = _deque.back();
-                    _deque.pop_back();
+                    ptr = _free_blocks.back();
+                    _free_blocks.pop_back();
                 }
                 return ptr;
             }
         }
 
-        void deallocate(T *, std::size_t) {};
+        void deallocate(T *ptr, std::size_t) {
+            _free_blocks.push_back(ptr);
+        }
 
         template <typename U, typename... Args>
         void construct(U *p, Args &&...args) {

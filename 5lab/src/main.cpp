@@ -4,8 +4,9 @@
 
 int main() {
     my_nsp::Dynamic_array<int, my_nsp::Allocator<int, 10>> arr;
-    arr.push_back(3);
-    arr.push_back(4);
+    for (std::size_t i = 0; i < 1; i++) {
+        arr.push_back(i);
+    }
     // arr.pop_back();
-    std::cout << arr[0] << " " << arr[1] << "\n";
+    std::cout << arr[0] << "\n";
 }
