@@ -8,7 +8,7 @@ namespace my_nsp {
     class Allocator {
     private:
         std::deque<T *> _free_blocks;
-        T _used_blocks[BLOCK_SIZE];
+        T *_used_blocks;
     public:
         using value_type = T;
         using pointer = T *;
@@ -17,12 +17,15 @@ namespace my_nsp {
 
         Allocator() {
             static_assert(BLOCK_SIZE > 0);
+            _used_blocks = new T[BLOCK_SIZE];
             for (std::size_t i = 0; i < BLOCK_SIZE; i++) {
                 _free_blocks.push_back(&_used_blocks[i]);
             }
         }
 
-        ~Allocator() {}
+        ~Allocator() {
+            delete[] _used_blocks;
+        }
 
         template <typename U>
         struct rebind {

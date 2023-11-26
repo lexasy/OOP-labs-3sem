@@ -3,10 +3,10 @@
 #include <iostream>
 
 int main() {
-    my_nsp::Dynamic_array<int, my_nsp::Allocator<int, 10>> arr;
-    for (std::size_t i = 0; i < 1; i++) {
+    my_nsp::Dynamic_array<int, my_nsp::Allocator<int, 16>> arr;
+    for (std::size_t i = 0; i < 16; i++) {
         arr.push_back(i);
     }
-    // arr.pop_back();
-    std::cout << arr[0] << "\n";
+    auto it = arr.end();
+    std::cout << *it << "\n";
 }
