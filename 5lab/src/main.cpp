@@ -14,20 +14,22 @@ int main() {
     for (std::size_t i = 0; i < 4; i++) {
         arr.emplace_back(i);
     }
-    auto it = arr.begin();
-    ++it;
-    it = arr.emplace(it, 123);
-    // auto it = arr.end();
-    // it = arr.erase(it);
-    // arr.push_back(123);
-    // auto it1 = arr.end();
+    // auto it = arr.begin();
+    // ++it;
+    // it = arr.emplace(it, 123);
+    // arr.clear();
+    // std::cout << arr.size() << "\n";
+    auto it = arr.end();
+    it = arr.erase(it);
+    arr.push_back(123);
+    auto it1 = arr.end();
     // arr.pop_back();
-    // arr.erase(it1);
-    // auto it2 = arr.begin();
-    // arr.insert(it2, 123);
-    // arr.push_back(124);
-    // ++it2;
-    // arr.erase(it2);
+    arr.erase(it1);
+    auto it2 = arr.begin();
+    arr.insert(it2, 123);
+    arr.push_back(124);
+    ++it2;
+    arr.erase(it2);
     for (std::size_t i = 0; i < arr.size(); i++) {
         std::cout << arr[i] << " ";
     }

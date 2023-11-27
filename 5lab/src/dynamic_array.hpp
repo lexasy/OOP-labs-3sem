@@ -132,32 +132,27 @@ namespace my_nsp {
             if (_size == _capacity) {
                 expand();
             }
-            _buffer = allocator.allocate(DEFAULT);
-            for (std::size_t i = 0; i <= position._idx; i++) {
-                _buffer[i] = _buffer[i + 1];
+            for (std::size_t i = _size - 1; i >= position._idx; i--) {
+                _buffer[i + 1] = _buffer[i];
+                if (i == position._idx) {
+                    break;
+                }
             }
             _buffer[position._idx] = value;
-            position._size++;
-            _size++;
+            _size++; position._size++;
             return position;
         }
         iterator erase(iterator position) {
-            for (std::size_t i = position._idx; i > 0; i--) {
-                _buffer[i] = _buffer[i - 1];
+            for (std::size_t i = position._idx; i < _size; i++) {
+                _buffer[i] = _buffer[i + 1];
             }
-            allocator.deallocate(&_buffer[0], DEFAULT);
-            _buffer++;
-            _size--;
+            _size--; position._size = _size;
             if (_size <= _capacity / 2) {
                 shrink();
             }
             position._array = _buffer;
-            position._size = _size;
             return position;
         }
-        // void shrink_to_fit() {
-
-        // }
         void pop_back() {
             this->_size--;
             if (this->_size <= this->_capacity / 2) {
@@ -175,13 +170,14 @@ namespace my_nsp {
             if (_size == _capacity) {
                 expand();
             }
-            _buffer = allocator.allocate(DEFAULT);
-            for (std::size_t i = 0; i <= position._idx; i++) {
-                _buffer[i] = _buffer[i + 1];
+            for (std::size_t i = _size - 1; i >= position._idx; i--) {
+                _buffer[i + 1] = _buffer[i];
+                if (i == position._idx) {
+                    break();
+                }
             }
             _buffer[position._idx] = T(std::forward<Types>(args)...);
-            position._size++;
-            _size++;
+            _size++; position._size++;
             return position;
         }
         template <class... Types>
@@ -196,6 +192,15 @@ namespace my_nsp {
         }
         std::size_t capacity() {
             return this->_capacity;
+        }
+        void clear() {
+            std::size_t init_size = _size;
+            for (std::size_t _ = 0; _ < init_size; _++) {
+                this->pop_back();
+            }
+        }
+        bool empty() {
+            return _size == 0;
         }
         T& operator[](std::size_t idx) {
             if (idx >= _size) {
