@@ -146,9 +146,13 @@ namespace my_nsp {
                 _buffer[i] = _buffer[i - 1];
             }
             allocator.deallocate(&_buffer[0], DEFAULT);
-            position._size--;
             _buffer++;
             _size--;
+            if (_size <= _capacity / 2) {
+                shrink();
+            }
+            position._array = _buffer;
+            position._size = _size;
             return position;
         }
         // void shrink_to_fit() {
@@ -165,6 +169,27 @@ namespace my_nsp {
                 expand();
             }
             this->_buffer[this->_size++] = value;
+        }
+        template <class... Types>
+        iterator emplace(iterator position, Types&&... args) {
+            if (_size == _capacity) {
+                expand();
+            }
+            _buffer = allocator.allocate(DEFAULT);
+            for (std::size_t i = 0; i <= position._idx; i++) {
+                _buffer[i] = _buffer[i + 1];
+            }
+            _buffer[position._idx] = T(std::forward<Types>(args)...);
+            position._size++;
+            _size++;
+            return position;
+        }
+        template <class... Types>
+        void emplace_back(Types&&... args) {
+            if (_size == _capacity) {
+                expand();
+            }
+            this->_buffer[this->_size++] = T(std::forward<Types>(args)...);
         }
         std::size_t size() {
             return this->_size;

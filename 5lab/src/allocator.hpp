@@ -1,7 +1,6 @@
 #pragma once
 
 #include <deque>
-#include <cstdlib>
 
 namespace my_nsp {
     template <class T, std::size_t BLOCK_SIZE>
@@ -15,12 +14,8 @@ namespace my_nsp {
         using const_pointer = const T *;
         using size_type = std::size_t;
 
-        Allocator() {
+        Allocator() : _free_blocks(), _used_blocks(nullptr) {
             static_assert(BLOCK_SIZE > 0);
-            _used_blocks = new T[BLOCK_SIZE];
-            for (std::size_t i = 0; i < BLOCK_SIZE; i++) {
-                _free_blocks.push_back(&_used_blocks[i]);
-            }
         }
 
         ~Allocator() {
@@ -33,6 +28,12 @@ namespace my_nsp {
         };
 
         T* allocate(const std::size_t& n) {
+            if (_used_blocks == nullptr) {
+                _used_blocks = new T[BLOCK_SIZE];
+                for (std::size_t i = 0; i < BLOCK_SIZE; i++) {
+                    _free_blocks.push_back(&_used_blocks[i]);
+                }
+            }
             if (_free_blocks.size() < n) {
                 throw std::bad_alloc();
             } else {
