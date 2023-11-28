@@ -75,9 +75,15 @@ namespace my_nsp {
                 return (other._idx != this->_idx) || (other._array != this->_array);
             }
             T& operator*() {
+                if (this->_idx >= _size) {
+                    throw std::logic_error("Out of bound"); 
+                }
                 return this->_array[this->_idx];
             }
             T& operator->() {
+                if (this->_idx >= _size) {
+                    throw std::logic_error("Out of bound"); 
+                }
                 return this->_array[this->_idx];
             }
         };
@@ -109,10 +115,16 @@ namespace my_nsp {
             bool operator!=(const Const_Iterator& other) {
                 return (other._idx != this->_idx) || (other._array != this->_array);
             }
-            T& operator*() {
+            const T& operator*() {
+                if (this->_idx >= _size) {
+                    throw std::logic_error("Out of bound"); 
+                }
                 return this->_array[this->_idx];
             }
-            T& operator->() {
+            const T& operator->() {
+                if (this->_idx >= _size) {
+                    throw std::logic_error("Out of bound"); 
+                }
                 return this->_array[this->_idx];
             }
         };
