@@ -36,6 +36,14 @@ namespace my_nsp {
             _size = 0;
             _capacity = DEFAULT;
         }
+        Dynamic_array(const std::initializer_list<T>& arr) {
+            _buffer = allocator.allocate(DEFAULT);
+            _size = 0;
+            _capacity = DEFAULT;
+            for (auto& c : arr) {
+                this->push_back(c);
+            }
+        }
         class Iterator {
         private:
             std::size_t _size;
@@ -173,7 +181,7 @@ namespace my_nsp {
             for (std::size_t i = _size - 1; i >= position._idx; i--) {
                 _buffer[i + 1] = _buffer[i];
                 if (i == position._idx) {
-                    break();
+                    break;
                 }
             }
             _buffer[position._idx] = T(std::forward<Types>(args)...);
