@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdexcept>
+#include <iostream>
 
 #define DEFAULT 1
 
@@ -19,12 +20,18 @@ namespace my_nsp {
         std::size_t _capacity;
         // Buffer expand method
         void expand() {
-            T *new_buffer = allocator.allocate(_capacity);
-            for (std::size_t i = 0; i < _size; i++) {
-                new_buffer[i] = _buffer[i];
+            if (_capacity == 0) {
+                _buffer = allocator.allocate(DEFAULT);
+                _size = 0;
+                _capacity = DEFAULT;
+            } else {
+                T *new_buffer = allocator.allocate(_capacity);
+                for (std::size_t i = 0; i < _size; i++) {
+                    new_buffer[i] = _buffer[i];
+                }
+                _buffer = new_buffer;
+                _capacity *= 2;
             }
-            _buffer = new_buffer;
-            _capacity *= 2;
         }
         // Buffer shrink method
         void shrink() {
@@ -84,7 +91,7 @@ namespace my_nsp {
                 return *this;
             }
             // Iterator increment
-            Iterator& Iterator::operator++(int) {
+            Iterator& operator++(int) {
                 if (_size <= _idx) {
                     throw std::logic_error("Out of bound"); 
                 }
@@ -145,7 +152,7 @@ namespace my_nsp {
                 return *this;
             }
             // Iterator increment
-            Const_Iterator& Const_Iterator::operator++(int) {
+            Const_Iterator& operator++(int) {
                 if (_size <= _idx) {
                     throw std::logic_error("Out of bound"); 
                 }
@@ -200,41 +207,50 @@ namespace my_nsp {
             return Const_Iterator(this->_buffer, this->_size, this->_size);
         }
         // Inserts an element at a specified position
-        iterator insert(iterator position, T value) {
+        iterator insert(const_iterator& position, const T& value) {
             if (_size == _capacity) {
                 expand();
             }
-            for (std::size_t i = _size - 1; i >= position._idx; i--) {
-                _buffer[i + 1] = _buffer[i];
-                if (i == position._idx) {
-                    break;
+            if (_size > 0) {
+                for (std::size_t i = _size - 1; i >= position._idx; i--) {
+                    _buffer[i + 1] = _buffer[i];
+                    if (i == position._idx) {
+                        break;
+                    }
                 }
             }
             _buffer[position._idx] = value;
             _size++; position._size++;
-            return position;
+            position._array = (T const *) _buffer;
+            return Iterator(_buffer, position._idx, _size);
         }
         // Removes an element from specified position
-        iterator erase(iterator position) {
+        iterator erase(const_iterator& position) {
+            if (_size == 0) {
+                throw std::logic_error("Array is empty");
+            }
             for (std::size_t i = position._idx; i < _size; i++) {
                 _buffer[i] = _buffer[i + 1];
             }
             _size--; position._size = _size;
-            if (_size <= _capacity / 2) {
+            if (_size <= _capacity / 2 && _size != 0) {
                 shrink();
             }
-            position._array = _buffer;
-            return position;
+            position._array = (T const *) _buffer;
+            return Iterator(_buffer, position._idx, _size);
         }
         // Removes the element at the end of the vector
         void pop_back() {
+            if (_size == 0) {
+                throw std::logic_error("Array is empty");
+            }
             this->_size--;
-            if (this->_size <= this->_capacity / 2) {
+            if (this->_size <= this->_capacity / 2 && _size != 0) {
                 shrink();
             }
         }
         // Adds an element to the end of the vector
-        void push_back(T value) {
+        void push_back(const T& value) {
             if (_size == _capacity) {
                 expand();
             }
@@ -242,19 +258,22 @@ namespace my_nsp {
         }
         // Inserts an in-place constructed element into a vector at the specified position
         template <class... Types>
-        iterator emplace(iterator position, Types&&... args) {
+        iterator emplace(const_iterator& position, Types&&... args) {
             if (_size == _capacity) {
                 expand();
             }
-            for (std::size_t i = _size - 1; i >= position._idx; i--) {
-                _buffer[i + 1] = _buffer[i];
-                if (i == position._idx) {
-                    break;
+            if (_size > 0) {
+                for (std::size_t i = _size - 1; i >= position._idx; i--) {
+                    _buffer[i + 1] = _buffer[i];
+                    if (i == position._idx) {
+                        break;
+                    }
                 }
             }
             _buffer[position._idx] = T(std::forward<Types>(args)...);
             _size++; position._size++;
-            return position;
+            position._array = (T const *) _buffer;
+            return Iterator(_buffer, position._idx, _size);
         }
         // Adds a constructed element to the end of the vector
         template <class... Types>
@@ -263,6 +282,17 @@ namespace my_nsp {
                 expand();
             }
             this->_buffer[this->_size++] = T(std::forward<Types>(args)...);
+        }
+        // Discards excess capacity
+        void shrink_to_fit() {
+            for (std::size_t i = 0; i < _size; i++) {
+                _buffer[_capacity - 1 - i] = _buffer[_size - 1 - i];
+            }
+            for (std::size_t i = 0 ; i < _capacity - _size; i++) {
+                allocator.deallocate(&_buffer[0], DEFAULT);
+                _buffer++;
+            }
+            _capacity = _size;
         }
         // Returns the number of elements in a vector
         std::size_t size() {
@@ -301,13 +331,25 @@ namespace my_nsp {
         // Returns a reference to the vector element at the specified position
         T& operator[](std::size_t idx) {
             if (idx >= _size) {
-                throw std::exception();
+                throw std::logic_error("Out of bound exception");
             }
             return this->_buffer[idx];
         }
         // Replaces the elements of a vector with a copy of another vector
         void operator=(const Dynamic_array<T, Allocator>& other) {
             return;
+        }
+        // Print method
+        void print() {
+            for (std::size_t i = 0; i < _size; i++) {
+                std::cout << _buffer[i] << " ";
+            }
+        }
+        // Destructor
+        ~Dynamic_array() {
+            for (std::size_t i = 0; i < _size; i++) {
+                allocator.deallocate(&_buffer[i], DEFAULT);
+            }
         }
     };
 }
