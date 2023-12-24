@@ -4,7 +4,7 @@
 class Elf : public Npc {
 public:
     Elf(std::string name, int x, int y);
-    Elf(std::string name, std::istream& is);
+    Elf(std::istream& is);
     void print() override;
     void save(std::ostream& os) override;
     bool is_elf() const override;

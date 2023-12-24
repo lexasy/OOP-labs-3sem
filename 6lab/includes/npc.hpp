@@ -1,5 +1,7 @@
 #pragma once
 
+#define FileOutput "./log.txt"
+
 #include <iostream>
 #include <memory>
 #include <cstring>
@@ -8,31 +10,30 @@
 #include <fstream>
 #include <set>
 #include <math.h>
+#include <obserevers.hpp>
 
 class Npc;
 class Bear;
 class Elf;
 class Robber;
 
+
+
 typedef enum NpcType {
     UnknownType, BearType, ElfType, RobberType
-};
-
-struct IFightObserver{
-    virtual void on_fight(const std::shared_ptr<Npc> attacker, const std::shared_ptr<Npc> defender, bool win) = 0;
 };
 
 class Npc : public std::enable_shared_from_this<Npc> {
 public:
     NpcType npctype;
     int x, y;
-    std::vector<std::shared_ptr<IFightObserver>> observers;
+    std::vector<std::shared_ptr<Observer>> observers;
     std::string name;
 
     Npc(NpcType type, std::string _name, int _x, int _y);
-    Npc(NpcType type, std::string _name, std::istream& is);
+    Npc(NpcType type, std::istream& is);
 
-    void subscribe(std::shared_ptr<IFightObserver> observer);
+    void subscribe(std::shared_ptr<Observer> observer);
     void fight_notify(const std::shared_ptr<Npc> defender, bool win);
     virtual bool is_close(const std::shared_ptr<Npc> &other, size_t distance) const;
 

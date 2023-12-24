@@ -4,7 +4,7 @@
 class Bear : public Npc {
 public:
     Bear(std::string name, int x, int y);
-    Bear(std::string name, std::istream& is);
+    Bear(std::istream& is);
     void print() override;
     void save(std::ostream& os) override;
     bool is_bear() const override;

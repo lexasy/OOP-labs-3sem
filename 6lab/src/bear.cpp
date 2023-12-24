@@ -1,9 +1,9 @@
-#include "bear.hpp"
-#include "elf.hpp"
-#include "robber.hpp"
+#include "../includes/bear.hpp"
+#include "../includes/elf.hpp"
+#include "../includes/robber.hpp"
 
 Bear::Bear(std::string name, int x, int y) : Npc(BearType, name, x, y) {}
-Bear::Bear(std::string name, std::istream& is) : Npc(BearType, name, is) {}
+Bear::Bear(std::istream& is) : Npc(BearType, is) {}
 
 void Bear::print() {
     std::cout << *this;
