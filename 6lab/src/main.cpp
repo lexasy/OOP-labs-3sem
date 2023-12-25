@@ -1,95 +1,6 @@
-#include "../includes/bear.hpp"
-#include "../includes/elf.hpp"
-#include "../includes/robber.hpp"
+#include "../includes/factory.hpp"
 
 using set_t = std::set<std::shared_ptr<Npc>>;
-
-class FileObserver : public Observer {
-private:
-    FileObserver() {}
-public:
-    static std::shared_ptr<Observer> get() {
-        static std::shared_ptr<Observer> instance(new FileObserver());
-        return instance;
-    }
-    void on_fight(const std::shared_ptr<Npc> attacker, const std::shared_ptr<Npc> defender, bool win) override {
-        if (win) {
-            std::ofstream file(FileOutput, std::ios_base::app);
-
-            file << "\nMurder\n";
-            attacker->print(file);
-            file << "->";
-            defender->print(file);
-            file.close();
-        }
-    }
-};
-
-class OutputObserver : public Observer {
-private:
-    OutputObserver() {}
-public:
-    static std::shared_ptr<Observer> get() {
-        static OutputObserver instance;
-        return std::shared_ptr<Observer>(&instance, [](Observer *) {});
-    }
-    void on_fight(const std::shared_ptr<Npc> attacker, const std::shared_ptr<Npc> defender, bool win) override {
-        if (win) {
-            std::cout << "\nMurder\n"; 
-            attacker->print();
-            std::cout << "->";
-            defender->print();
-        }
-    }
-};
-
-std::shared_ptr<Npc> factory(NpcType tp, std::string name, int x, int y) {
-    std::shared_ptr<Npc> result;
-    switch (tp) {
-    case BearType:
-        result = std::make_shared<Bear>(name, x, y);
-        break;
-    case ElfType:
-        result = std::make_shared<Elf>(name, x, y);
-        break;
-    case RobberType:
-        result = std::make_shared<Robber>(name, x, y);
-        break;
-    default:
-        std::cerr << "Undefined NPC type\n";
-        break;
-    }
-    if (result) {
-        result->subscribe(OutputObserver::get());
-        result->subscribe(FileObserver::get());
-    }
-    return result;
-}
-
-std::shared_ptr<Npc> factory(std::istream& is) {
-    std::shared_ptr<Npc> result;
-    int tp;
-    is >> tp;
-    switch (tp) {
-    case BearType:
-        result = std::make_shared<Bear>(is);
-        break;
-    case ElfType:
-        result = std::make_shared<Elf>(is);
-        break;
-    case RobberType:
-        result = std::make_shared<Robber>(is);
-        break;
-    default:
-        std::cerr << "Undefined NPC type\n";
-        break;
-    }
-    if (result) {
-        result->subscribe(OutputObserver::get());
-        result->subscribe(FileObserver::get());
-    }
-    return result;
-}
 
 void save(const set_t& array, const std::string& filename) {
     std::ofstream fs(filename);
@@ -159,5 +70,5 @@ int main() {
         }
         std::cout << "\nFight stats ----------\ndistance: " << distance << "\nkilled: " << dead_list.size() << "\n\n";
     }
-    std::cout << "Survivers: " << array;
+    std::cout << "Survivers: " << array << "\n";
 }

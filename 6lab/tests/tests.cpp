@@ -1,7 +1,5 @@
 #include <gtest/gtest.h>
-#include "../includes/bear.hpp"
-#include "../includes/elf.hpp"
-#include "../includes/robber.hpp"
+#include "../includes/factory.hpp"
 
 TEST(test_01, task_test) {
     std::shared_ptr<Npc> bear = std::make_shared<Bear>("Bear", 5, 5);
@@ -67,6 +65,74 @@ TEST(test_05, print_methods_test3) {
     std::string answer = testing::internal::GetCapturedStdout();
     ASSERT_EQ(out, answer);
 }
+
+TEST(test_06, factory_test1) {
+    std::shared_ptr<Npc> bear = factory(BearType, "Bear", 5, 5);
+    ASSERT_TRUE(bear->npctype == BearType);
+    ASSERT_TRUE(bear->x = 5);
+    ASSERT_TRUE(bear->y = 5);
+}
+
+TEST(test_07, factory_test2) {
+    std::shared_ptr<Npc> elf = factory(ElfType, "Elf", 4, 4);
+    ASSERT_TRUE(elf->npctype == ElfType);
+    ASSERT_TRUE(elf->x = 4);
+    ASSERT_TRUE(elf->y = 4);
+}
+
+TEST(test_08, factory_test3) {
+    std::shared_ptr<Npc> robber = factory(RobberType, "Robber", 3, 3);
+    ASSERT_TRUE(robber->npctype = RobberType);
+    ASSERT_TRUE(robber->x == 3);
+    ASSERT_TRUE(robber->y == 3);
+}
+
+TEST(test_09, observer_test1) {
+    std::shared_ptr<Npc> bear = factory(BearType, "Bear", 5, 5);
+    std::shared_ptr<Npc> elf = factory(ElfType, "Elf", 4, 4);
+    testing::internal::CaptureStdout();
+    elf->accept(bear);
+    std::string out = testing::internal::GetCapturedStdout();
+    testing::internal::CaptureStdout();
+    std::cout << "\nMurder\n";
+    bear->print();
+    std::cout << "->";
+    elf->print();
+    std::string answer = testing::internal::GetCapturedStdout();
+    ASSERT_EQ(out, answer);
+}
+
+TEST(test_10, observer_test2) {
+    std::shared_ptr<Npc> elf = factory(ElfType, "Elf", 4, 4);
+    std::shared_ptr<Npc> robber = factory(RobberType, "Robber", 3, 3);
+    testing::internal::CaptureStdout();
+    robber->accept(elf);
+    std::string out = testing::internal::GetCapturedStdout();
+    testing::internal::CaptureStdout();
+    std::cout << "\nMurder\n";
+    elf->print();
+    std::cout << "->";
+    robber->print();
+    std::string answer = testing::internal::GetCapturedStdout();
+    ASSERT_EQ(out, answer);
+}
+
+TEST(test_11, observer_test3) {
+    std::shared_ptr<Npc> robber1 = factory(RobberType, "Robber", 3, 3);
+    std::shared_ptr<Npc> robber2 = factory(RobberType, "Robber", 4, 4);
+    testing::internal::CaptureStdout();
+    robber1->accept(robber2);
+    std::string out = testing::internal::GetCapturedStdout();
+    testing::internal::CaptureStdout();
+    std::cout << "\nMurder\n";
+    robber2->print();
+    std::cout << "->";
+    robber1->print();
+    std::string answer = testing::internal::GetCapturedStdout();
+    ASSERT_EQ(out, answer);
+}
+
+// Т.е. NPC порожденный фабрикой, а не вручную, привязывается к обзерверам (консольный и файловый) и оповещеает о своих изменениях
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
