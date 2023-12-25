@@ -18,6 +18,10 @@ bool Bear::is_bear() const {
     return true;
 }
 
+bool Bear::accept(std::shared_ptr<Npc> visitor) {
+    return visitor->visit(std::make_shared<Bear>(*this));
+}
+
 bool Bear::fight(std::shared_ptr<Elf> other) {
     fight_notify(other, true);
     return true;

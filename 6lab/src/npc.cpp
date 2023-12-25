@@ -38,6 +38,18 @@ bool Npc::is_robber() const {
     return false;
 }
 
+bool Npc::visit(std::shared_ptr<Bear> other) {
+    return this->visit(other);
+}
+
+bool Npc::visit(std::shared_ptr<Elf> other) {
+    return this->visit(other);
+}
+
+bool Npc::visit(std::shared_ptr<Robber> other) {
+    return this->visit(other);
+}
+
 void Npc::save(std::ostream& os) {
     os << x << "\n";
     os << y << "\n";

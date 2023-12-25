@@ -18,6 +18,10 @@ bool Robber::is_robber() const {
     return true;
 }
 
+bool Robber::accept(std::shared_ptr<Npc> visitor) {
+    return visitor->visit(std::make_shared<Robber>(*this));
+}
+
 bool Robber::fight(std::shared_ptr<Bear> other) {
     fight_notify(other, false);
     return false;

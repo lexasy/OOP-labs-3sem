@@ -17,8 +17,6 @@ class Bear;
 class Elf;
 class Robber;
 
-
-
 typedef enum NpcType {
     UnknownType, BearType, ElfType, RobberType
 };
@@ -41,9 +39,15 @@ public:
     virtual bool is_elf() const;
     virtual bool is_robber() const;
 
+    virtual bool accept(std::shared_ptr<Npc> visitor) = 0;
+
     virtual bool fight(std::shared_ptr<Bear> other) = 0;
     virtual bool fight(std::shared_ptr<Elf> other) = 0;
     virtual bool fight(std::shared_ptr<Robber> other) = 0;
+
+    bool visit(std::shared_ptr<Bear> other);
+    bool visit(std::shared_ptr<Elf> other);
+    bool visit(std::shared_ptr<Robber> other);
 
     virtual void print() = 0;
 
