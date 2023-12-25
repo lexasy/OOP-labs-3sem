@@ -9,6 +9,10 @@ void Elf::print() {
     std::cout << *this;
 }
 
+void Elf::print(std::ostream& os) {
+    os << *this;
+}
+
 void Elf::save(std::ostream& os) {
     os << ElfType << "\n";
     Npc::save(os);
@@ -38,6 +42,6 @@ bool Elf::fight(std::shared_ptr<Elf> other) {
 }
 
 std::ostream& operator<<(std::ostream& os, Elf& elf) {
-    os << "Elf" << *static_cast<Npc *>(&elf) << "\n";
+    os << "Elf: " << *static_cast<Npc *>(&elf) << "\n";
     return os;
 }

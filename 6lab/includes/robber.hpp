@@ -6,6 +6,7 @@ public:
     Robber(std::string name, int x, int y);
     Robber(std::istream& is);
     void print() override;
+    void print(std::ostream& os) override;
     void save(std::ostream& os) override;
     bool is_robber() const override;
     bool accept(std::shared_ptr<Npc> visitor) override;

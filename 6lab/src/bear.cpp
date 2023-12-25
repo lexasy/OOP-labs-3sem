@@ -9,6 +9,10 @@ void Bear::print() {
     std::cout << *this;
 }
 
+void Bear::print(std::ostream& os) {
+    os << *this;
+}
+
 void Bear::save(std::ostream& os) {
     os << BearType << "\n";
     Npc::save(os);

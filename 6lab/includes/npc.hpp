@@ -10,15 +10,19 @@
 #include <fstream>
 #include <set>
 #include <math.h>
-#include <obserevers.hpp>
 
 class Npc;
 class Bear;
 class Elf;
 class Robber;
 
-typedef enum NpcType {
-    UnknownType, BearType, ElfType, RobberType
+enum NpcType {
+    BearType, ElfType, RobberType
+};
+
+class Observer {
+public:
+    virtual void on_fight(const std::shared_ptr<Npc> attacker, const std::shared_ptr<Npc> defender, bool win) = 0;
 };
 
 class Npc : public std::enable_shared_from_this<Npc> {
@@ -50,6 +54,7 @@ public:
     bool visit(std::shared_ptr<Robber> other);
 
     virtual void print() = 0;
+    virtual void print(std::ostream& os) = 0;
 
     virtual void save(std::ostream& os);
 

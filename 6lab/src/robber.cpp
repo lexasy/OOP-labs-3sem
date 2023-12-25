@@ -9,6 +9,10 @@ void Robber::print() {
     std::cout << *this;
 }
 
+void Robber::print(std::ostream& os) {
+    os << *this;
+}
+
 void Robber::save(std::ostream& os) {
     os << RobberType << "\n";
     Npc::save(os);

@@ -2,7 +2,6 @@
 
 Npc::Npc(NpcType tp, std::string _name, int _x, int _y) : npctype(tp), name(_name), x(_x), y(_y) {}
 Npc::Npc(NpcType tp, std::istream& is) : npctype(tp) {
-    is >> name;
     is >> x;
     is >> y;
 }
@@ -39,15 +38,15 @@ bool Npc::is_robber() const {
 }
 
 bool Npc::visit(std::shared_ptr<Bear> other) {
-    return this->visit(other);
+    return this->fight(other);
 }
 
 bool Npc::visit(std::shared_ptr<Elf> other) {
-    return this->visit(other);
+    return this->fight(other);
 }
 
 bool Npc::visit(std::shared_ptr<Robber> other) {
-    return this->visit(other);
+    return this->fight(other);
 }
 
 void Npc::save(std::ostream& os) {
