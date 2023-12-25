@@ -42,6 +42,6 @@ bool Robber::fight(std::shared_ptr<Robber> other) {
 }
 
 std::ostream& operator<<(std::ostream& os, Robber& robber) {
-    os << "Robber: " << *static_cast<Npc *>(&robber) << "\n";
+    os << "Robber: " << *static_cast<Npc *>(&robber);
     return os;
 }
