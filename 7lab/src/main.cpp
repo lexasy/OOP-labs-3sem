@@ -47,21 +47,21 @@ std::ostream& operator<<(std::ostream& os, const set_t& array) {
     return os;
 }
 
-set_t fight(const set_t& array, size_t distance) {
-    set_t dead_list;
-    for (const auto &attacker : array) {
-        for (const auto &defender : array) {
-            if (attacker != defender) {
-                if (attacker->is_close(defender, distance)) {
-                    if (defender->accept(attacker)) {
-                        dead_list.insert(defender);
-                    }
-                }
-            }
-        }
-    }
-    return dead_list;
-}
+// set_t fight(const set_t& array) {
+//     set_t dead_list;
+//     for (const auto &attacker : array) {
+//         for (const auto &defender : array) {
+//             if (attacker != defender) {
+//                 if (attacker->is_close(defender)) {
+//                     if (defender->accept(attacker)) {
+//                         dead_list.insert(defender);
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//     return dead_list;
+// }
 
 struct print : std::stringstream {
     ~print() {
@@ -131,7 +131,6 @@ int main() {
     set_t array;
     const int MAX_X = 100;
     const int MAX_Y = 100;
-    const int DISTANCE = 40;
     std::cout << "Generating ..........\n";
     for (size_t i = 0; i < 50; i++) {
         array.insert(factory(NpcType(std::rand() % 3), "NPC", std::rand() % MAX_X, std::rand() % MAX_Y));
@@ -139,7 +138,7 @@ int main() {
     std::cout << "Starting list:\n" << array;
     std::thread fight_thread(std::ref(FightManager::get()));
     int timer = 0;
-    std::thread move_thread([&array, MAX_X, MAX_Y, DISTANCE]() {
+    std::thread move_thread([&array]() {
         while (move_thread_flag) {
             for (std::shared_ptr<Npc> npc : array) {
                 if (npc->is_alive()) {
@@ -153,7 +152,7 @@ int main() {
                     if (other != npc) {
                         if (npc->is_alive()) {
                             if (other->is_alive()) {
-                                if (npc->is_close(other, DISTANCE)) {
+                                if (npc->is_close(other)) {
                                     FightManager::get().add_event({npc, other});
                                 }
                             }
@@ -161,7 +160,7 @@ int main() {
                     }
                 }
             }
-            std::this_thread::sleep_for(1s);
+            std::this_thread::sleep_for(50ms);
         }
     });
     std::time_t start = std::time(nullptr);
@@ -205,10 +204,11 @@ int main() {
         std::this_thread::sleep_for(1s);
         start = std::time(nullptr);
     };
-        fight_thread_flag = false;
-        move_thread_flag = false;
+    fight_thread_flag = false;
+    move_thread_flag = false;
     move_thread.join();
     fight_thread.join();
     std::cout << "Survived monsters\n";
     std::cout << array << "\n";
+    return 0;
 }

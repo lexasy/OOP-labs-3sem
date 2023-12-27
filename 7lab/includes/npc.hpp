@@ -49,7 +49,7 @@ public:
 
     void subscribe(std::shared_ptr<Observer> observer);
     void fight_notify(const std::shared_ptr<Npc> defender, bool win);
-    virtual bool is_close(const std::shared_ptr<Npc> &other, int distance);
+    virtual bool is_close(const std::shared_ptr<Npc> &other);
 
     virtual bool accept(std::shared_ptr<Npc> visitor) = 0;
 

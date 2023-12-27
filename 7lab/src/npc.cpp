@@ -16,7 +16,8 @@ void Npc::fight_notify(const std::shared_ptr<Npc> defender, bool win) {
     }
 }
 
-bool Npc::is_close(const std::shared_ptr<Npc>& other, int distance) {
+bool Npc::is_close(const std::shared_ptr<Npc>& other) {
+    int distance = 0;
     auto [other_x, other_y] = other->position();
     std::lock_guard<std::mutex> lck(mutex);
     if (this->get_type() == BearType) {
