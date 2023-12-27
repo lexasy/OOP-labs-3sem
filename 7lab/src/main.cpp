@@ -174,11 +174,11 @@ int main() {
                 int i = x / step_x;
                 int j = y / step_y;
                 if (npc->is_alive()) {
-                    if (npc->get_type() == BearType) {
+                    if (npc->npctype == BearType) {
                         fields[i + grid * j] = 'B';
-                    } else if (npc->get_type() == ElfType) {
+                    } else if (npc->npctype == ElfType) {
                         fields[i + grid * j] = 'E';
-                    } else if (npc->get_type() == RobberType) {
+                    } else if (npc->npctype == RobberType) {
                         fields[i + grid * j] = 'R';
                     }
                 } else {
