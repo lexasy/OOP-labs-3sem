@@ -7,6 +7,8 @@
 #include <optional>
 #include <array>
 
+#define BATTLE_TIME 30
+
 using namespace std::chrono_literals;
 
 using set_t = std::set<std::shared_ptr<Npc>>;
@@ -137,7 +139,6 @@ int main() {
     }
     std::cout << "Starting list:\n" << array;
     std::thread fight_thread(std::ref(FightManager::get()));
-    int timer = 0;
     std::thread move_thread([&array]() {
         while (move_thread_flag) {
             for (std::shared_ptr<Npc> npc : array) {
@@ -163,9 +164,8 @@ int main() {
             std::this_thread::sleep_for(50ms);
         }
     });
-    std::time_t start = std::time(nullptr);
-    std::time_t finish = start + 30;
-    while (start < finish) { // 30 seconds of battle
+    int timer = 0;
+    while (timer < BATTLE_TIME) { // 30 seconds of battle
         const int grid{20}, step_x{MAX_X / grid}, step_y{MAX_Y / grid};
         {
             std::array<char, grid * grid> fields{0};
@@ -202,7 +202,7 @@ int main() {
             std::cout << "\n";
         }
         std::this_thread::sleep_for(1s);
-        start = std::time(nullptr);
+        timer++;
     };
     fight_thread_flag = false;
     move_thread_flag = false;

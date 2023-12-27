@@ -20,11 +20,11 @@ bool Npc::is_close(const std::shared_ptr<Npc>& other) {
     int distance = 0;
     auto [other_x, other_y] = other->position();
     std::lock_guard<std::mutex> lck(mutex);
-    if (this->get_type() == BearType) {
+    if (this->npctype == BearType) {
         distance = BEAR_FIGHT_DISTANCE;
-    } else if (this->get_type() == ElfType) {
+    } else if (this->npctype == ElfType) {
         distance = ELF_FIGHT_DISTANCE;
-    } else if (this->get_type() == RobberType) {
+    } else if (this->npctype == RobberType) {
         distance = ROBBER_FIGHT_DISTANCE;
     }
     if (std::pow(x - other_x, 2) + std::pow(y - other_y, 2) <= std::pow(distance, 2)) {
@@ -36,7 +36,7 @@ bool Npc::is_close(const std::shared_ptr<Npc>& other) {
 }
 
 NpcType Npc::get_type() {
-    // std::lock_guard<std::mutex> lck(mutex);
+    std::lock_guard<std::mutex> lck(mutex);
     return npctype;
 }
 
@@ -53,11 +53,11 @@ void Npc::save(std::ostream& os) {
 void Npc::move(int shift_x, int shift_y, int max_x, int max_y) {
     std::lock_guard<std::mutex> lck(mutex);
     int distance = 0;
-    if (this->get_type() == BearType) {
+    if (this->npctype == BearType) {
         distance = BEAR_STEP;
-    } else if (this->get_type() == ElfType) {
+    } else if (this->npctype == ElfType) {
         distance = ELF_STEP;
-    } else if (this->get_type() == RobberType) {
+    } else if (this->npctype == RobberType) {
         distance = ROBBER_STEP;
     }
     shift_x = distance * pow(-1, shift_x);
